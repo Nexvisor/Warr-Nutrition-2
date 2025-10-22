@@ -11,15 +11,25 @@ datasource db {
 model User{
   id String @id @default(auto()) @map("_id") @db.ObjectId
   username String?
-  email String? @unique
-  phoneNumber String @unique
+  email String @unique
+  phoneNumber String? @unique
   role Role @default(USER)
   addresses Address[]
   orders Order[]
   cart Cart? @relation("UserCart")
+  otp OTP?
   createAt DateTime @default(now())
 }
+model OTP{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @unique @db.ObjectId
+  code String
+  user User @relation(fields: [userId],references: [id])
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  @@index([expiresAt])
 
+}
 model Product{
   id String @id @default(auto()) @map("_id") @db.ObjectId
   title       String

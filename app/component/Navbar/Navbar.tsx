@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import React, { useEffect, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { useDispatch } from "react-redux";
 import {
   ProductCategory,
@@ -18,6 +18,8 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { ShoppingCart, User, Shield } from "lucide-react";
+import DialogCompo from "@/app/component/comman/DialogCompo";
+import Login from "./Login";
 
 function Navbar() {
   const pathname = usePathname();
@@ -25,6 +27,7 @@ function Navbar() {
 
   const dispatch = useDispatch();
   const [isPending, startTransition] = useTransition();
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -117,15 +120,21 @@ function Navbar() {
               {status !== "authenticated" && (
                 <Button
                   className="bg-gradient-to-br from-[#1e7ae4] to-[#052f5e] text-white px-6 py-2 rounded-md shadow-md hover:opacity-90 transition"
-                  onClick={() => navigation.push("/Login")}
+                  onClick={() => setIsOpen(true)}
                 >
-                  Login / Sign Up
+                  Login
                 </Button>
               )}
             </div>
           </>
         )}
       </div>
+      <DialogCompo
+        isOpen={isOpen}
+        onOpenChange={() => setIsOpen((prev: boolean) => !prev)}
+      >
+        <Login setIsOpen={setIsOpen} />
+      </DialogCompo>
     </header>
   );
 }

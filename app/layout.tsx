@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "@/utils/ReduxProvider";
 import { Toaster } from "@/components/ui/sonner";
+import { CheckCircle, XCircle } from "lucide-react";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
