@@ -6,15 +6,12 @@ export const Next_Auth: NextAuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        email: {
-          label: "Email",
-          type: "email",
-          placeholder: "John@example.com",
-        },
+        user: { label: "User", type: "text" },
       },
       async authorize(credentails: any) {
-        const { user } = credentails;
-        console.log(user);
+        let { user } = credentails;
+        user = JSON.parse(user);
+
         if (!user) {
           throw new Error("Email and password are required");
         }

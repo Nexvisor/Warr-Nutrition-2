@@ -141,6 +141,8 @@ const initialState = {
   productCategories: [] as ProductCategory[],
   productFlavors: [] as ProductFlavor[],
   products: [] as Product[],
+  isLoading: false as boolean,
+  isLoginDialoagOpen: false as boolean,
 };
 
 const dataSlice = createSlice({
@@ -156,10 +158,21 @@ const dataSlice = createSlice({
     setProducts: (state, action: PayloadAction<Product[]>) => {
       state.products = action.payload;
     },
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
+    setIsLoginDialoagOpen: (state, action: PayloadAction<boolean>) => {
+      state.isLoginDialoagOpen = action.payload;
+    },
   },
 });
 
-export const { setProductCategory, setProductFlavor, setProducts } =
-  dataSlice.actions;
+export const {
+  setProductCategory,
+  setProductFlavor,
+  setProducts,
+  setIsLoading,
+  setIsLoginDialoagOpen,
+} = dataSlice.actions;
 
 export default dataSlice.reducer;

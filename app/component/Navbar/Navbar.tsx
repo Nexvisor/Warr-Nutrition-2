@@ -1,43 +1,57 @@
 "use client";
 import axios from "axios";
-import React, { useEffect, useState, useTransition } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   ProductCategory,
   ProductFlavor,
+  setIsLoading,
+  setIsLoginDialoagOpen,
   setProductCategory,
   setProductFlavor,
   setProducts,
 } from "@/utils/DataSlice";
 import { Badge } from "@/components/ui/badge";
 
-import Loader from "@/app/component/Loader";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
+
 import { usePathname, useRouter } from "next/navigation";
 import { ShoppingCart, User, Shield } from "lucide-react";
 import DialogCompo from "@/app/component/comman/DialogCompo";
 import Login from "./Login";
+import { RootState } from "@/utils/store";
+import useUserData from "@/hooks/useUserData";
 
 function Navbar() {
   const pathname = usePathname();
   const navigation = useRouter();
 
   const dispatch = useDispatch();
-  const [isPending, startTransition] = useTransition();
-  const [isOpen, setIsOpen] = useState(false);
+  const user = useUserData();
+
+  const isLoginDialogOpen = useSelector(
+    (state: RootState) => state.dataSlice.isLoginDialoagOpen
+  );
 
   useEffect(() => {
     const fetchData = async () => {
-      await Promise.all([
-        getProductFlavour(),
-        getPrductCategory(),
-        getProducts(),
-      ]);
+      dispatch(setIsLoading(true));
+      try {
+        await Promise.all([
+          getProductFlavour(),
+          getPrductCategory(),
+          getProducts(),
+        ]);
+      } catch (e: any) {
+        console.log("Error is fetching data " + e.message);
+      } finally {
+        dispatch(setIsLoading(false));
+      }
     };
-    startTransition(fetchData);
+
+    fetchData();
   }, []);
 
   const getPrductCategory = async () => {
@@ -56,9 +70,7 @@ function Navbar() {
     const { products } = res.data;
     dispatch(setProducts(products));
   };
-  if (isPending) {
-    return <Loader />;
-  }
+
   return (
     <header className="border-b sticky top-0 z-50 bg-white">
       <div className="px-4 py-4 flex items-center justify-between md:px-0">
@@ -120,7 +132,9 @@ function Navbar() {
               {status !== "authenticated" && (
                 <Button
                   className="bg-gradient-to-br from-[#1e7ae4] to-[#052f5e] text-white px-6 py-2 rounded-md shadow-md hover:opacity-90 transition"
-                  onClick={() => setIsOpen(true)}
+                  onClick={() =>
+                    dispatch(setIsLoginDialoagOpen(!isLoginDialogOpen))
+                  }
                 >
                   Login
                 </Button>
@@ -130,10 +144,10 @@ function Navbar() {
         )}
       </div>
       <DialogCompo
-        isOpen={isOpen}
-        onOpenChange={() => setIsOpen((prev: boolean) => !prev)}
+        isOpen={isLoginDialogOpen}
+        onOpenChange={() => dispatch(setIsLoginDialoagOpen(!isLoginDialogOpen))}
       >
-        <Login setIsOpen={setIsOpen} />
+        <Login />
       </DialogCompo>
     </header>
   );

@@ -24,6 +24,8 @@ import { z } from "zod";
 import axios from "axios";
 import { toast } from "sonner";
 import { signIn } from "next-auth/react";
+import { useDispatch } from "react-redux";
+import { setIsLoginDialoagOpen } from "@/utils/DataSlice";
 
 interface OTPVerificationProps {
   email: string;
@@ -31,7 +33,6 @@ interface OTPVerificationProps {
   onBack: () => void;
   title: string;
   description: string;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function OTPVerification({
@@ -40,8 +41,8 @@ export function OTPVerification({
   onBack,
   title,
   description,
-  setIsOpen,
 }: OTPVerificationProps) {
+  const dispatch = useDispatch();
   const [isPending, startTransition] = useTransition();
   const [isResending, startResending] = useTransition();
   const [timeLeft, setTimeLeft] = useState(30);
@@ -119,12 +120,12 @@ export function OTPVerification({
         }
 
         await signIn("credentials", {
-          user,
+          user: JSON.stringify(user),
           redirect: false,
         });
 
         localStorage.setItem("userId", "");
-        setIsOpen(false);
+        dispatch(setIsLoginDialoagOpen(false));
 
         toast.success(message, {
           icon: <CheckCircle className="w-5 h-5 text-green-600" />,

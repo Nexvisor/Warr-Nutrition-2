@@ -4,6 +4,7 @@ import "./globals.css";
 import ReduxProvider from "@/utils/ReduxProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { CheckCircle, XCircle } from "lucide-react";
+import Provider from "@/utils/Provider";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -29,10 +30,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ReduxProvider>
-          <Toaster />
-          {children}
-        </ReduxProvider>
+        <Provider>
+          <ReduxProvider>
+            <Toaster />
+            {children}
+          </ReduxProvider>
+        </Provider>
       </body>
     </html>
   );

@@ -52,6 +52,7 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json({
       success: true,
       user,
+      message: "OTP sent successfully.",
     });
   } catch (error) {
     console.error("Error during registration:", error);

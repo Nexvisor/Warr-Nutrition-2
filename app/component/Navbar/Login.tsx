@@ -21,10 +21,8 @@ import { OTPVerification } from "@/app/component/comman/OtpVerification";
 const FormSchema = z.object({
   email: z.email("Email is required"),
 });
-interface LoginType {
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-function Login({ setIsOpen }: LoginType) {
+
+function Login() {
   const [isPending, startTransition] = useTransition();
   const [showOtpForm, setShowOtpForm] = useState(false);
   const [email, setEmail] = useState("");
@@ -101,7 +99,6 @@ function Login({ setIsOpen }: LoginType) {
           setShowOtpForm(false);
           setEmail("");
         }}
-        setIsOpen={setIsOpen}
         title="OTP Verification"
         description="Enter the OTP sent to your email to continue."
       />
