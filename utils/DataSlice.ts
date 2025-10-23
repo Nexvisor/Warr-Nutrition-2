@@ -138,9 +138,11 @@ export interface CartItems {
 }
 
 const initialState = {
+  userInfo: {} as User,
   productCategories: [] as ProductCategory[],
   productFlavors: [] as ProductFlavor[],
   products: [] as Product[],
+  cart: {} as Cart,
   isLoading: false as boolean,
   isLoginDialoagOpen: false as boolean,
 };
@@ -149,6 +151,9 @@ const dataSlice = createSlice({
   name: "dataSlice",
   initialState,
   reducers: {
+    setUserInfo: (state, action: PayloadAction<User>) => {
+      state.userInfo = action.payload;
+    },
     setProductCategory: (state, action: PayloadAction<ProductCategory[]>) => {
       state.productCategories = action.payload;
     },
@@ -157,6 +162,9 @@ const dataSlice = createSlice({
     },
     setProducts: (state, action: PayloadAction<Product[]>) => {
       state.products = action.payload;
+    },
+    setCart: (state, action: PayloadAction<Cart>) => {
+      state.cart = action.payload;
     },
     setIsLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
@@ -168,9 +176,11 @@ const dataSlice = createSlice({
 });
 
 export const {
+  setUserInfo,
   setProductCategory,
   setProductFlavor,
   setProducts,
+  setCart,
   setIsLoading,
   setIsLoginDialoagOpen,
 } = dataSlice.actions;
