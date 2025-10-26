@@ -16,7 +16,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-// import { useSignOut } from "@/hooks/SignOutHandler";
+import { useSignOut } from "@/hooks/SignOutHandler";
 
 const navigationItems = [
   {
@@ -37,7 +37,7 @@ const navigationItems = [
 ];
 
 export function AppSidebar() {
-  //   const signOutHandler = useSignOut();
+  const signOutHandler = useSignOut();
   const pathname = usePathname();
 
   return (
@@ -87,7 +87,7 @@ export function AppSidebar() {
 
         {/* Logout Button */}
         <Button
-          //   onClick={signOutHandler}
+          onClick={signOutHandler}
           variant="ghost"
           className="w-full justify-start bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white transition-all duration-200 py-2"
         >

@@ -112,7 +112,10 @@ export const POST = async (req: NextRequest) => {
         pincode: ${address?.pincode}
         city: ${address?.city}
         state: ${address?.state}
-        paidPrice: ${product?.product.price}
+        paidPrice: ${getActualPrice(
+          product.product.price,
+          product.product.discountPercentage
+        )}
         orderAt: ${getDateTime(newOrder.createdAt)}
     `;
 

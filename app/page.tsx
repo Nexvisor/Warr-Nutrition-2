@@ -6,6 +6,7 @@ import NewProductSection from "./component/NewProducts/NewProductSection";
 import { useSelector } from "react-redux";
 import { RootState } from "@/utils/store";
 import Loader from "./component/Loader";
+import Footer from "./component/Footer/Footer";
 export default function Home() {
   const isLoading = useSelector(
     (state: RootState) => state.dataSlice.isLoading
@@ -21,6 +22,7 @@ export default function Home() {
         <HeroSection />
         <CategorySection />
         <NewProductSection />
+        <Footer />
       </div>
     </div>
   );

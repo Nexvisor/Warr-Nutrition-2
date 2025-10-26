@@ -60,19 +60,86 @@ function Navbar() {
   }, []);
 
   useEffect(() => {
+    const controller = new AbortController();
+    let isMounted = true; // Track mount status
+
     const fetchData = async () => {
       dispatch(setIsLoading(true));
       try {
-        await Promise.all([getCart(), getAddress()]);
+        await Promise.all([getCart(controller), getAddress(controller)]);
       } catch (e: any) {
-        console.log("Error is fetching data " + e.message);
+        // Only log if it's not a cancellation
+        if (!axios.isCancel(e)) {
+          console.log("Error fetching data: " + e.message);
+        }
       } finally {
-        dispatch(setIsLoading(false));
+        // Only update state if component is still mounted
+        if (isMounted) {
+          dispatch(setIsLoading(false));
+        }
       }
     };
 
     fetchData();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
   }, [userInfo.id]);
+
+  useEffect(() => {
+    if (userInfo.role === "ADMIN") {
+      navigation.push("/dashboard");
+    }
+  }, [userInfo.id]);
+
+  const getCart = async (controller: AbortController) => {
+    if (!userInfo.id) return;
+
+    try {
+      const res = await axios.get(`/api/cart/getCart?userId=${userInfo.id}`, {
+        signal: controller.signal,
+      });
+      const { success, data, message } = res.data;
+
+      if (success) {
+        dispatch(setCart(data));
+      } else {
+        console.error("API Error fetching cart:", message);
+        dispatch(setCart({} as Cart));
+      }
+    } catch (error) {
+      // Don't update state if request was cancelled
+      if (!axios.isCancel(error)) {
+        console.error("Failed to fetch cart:", error);
+        dispatch(setCart({} as Cart));
+      }
+    }
+  };
+
+  const getAddress = async (controller: AbortController) => {
+    if (!userInfo.id) return;
+
+    try {
+      const addressRes = await axios.get(
+        `/api/address/getAddress?userId=${userInfo.id}`,
+        {
+          signal: controller.signal,
+        }
+      );
+
+      dispatch(setAddress(addressRes.data.address));
+    } catch (err) {
+      if (axios.isCancel(err)) {
+        console.log("Request canceled:", err.message);
+      } else {
+        console.error("Error fetching address:", err);
+        // Optionally reset address state on error
+        // dispatch(setAddress(null));
+      }
+    }
+  };
 
   const getPrductCategory = async () => {
     const res = await axios.get("/api/Products/get-category");
@@ -89,59 +156,6 @@ function Navbar() {
     const res = await axios.get("/api/Products/get-products");
     const { products } = res.data;
     dispatch(setProducts(products));
-  };
-
-  /**
-   * Fetches the user's cart from the API and updates the Redux store.
-   * This function is called when the component mounts or when the user's info changes.
-   */
-  const getCart = async () => {
-    // Step 1: Guard clause to prevent API calls if there is no logged-in user.
-    if (!userInfo.id) return;
-
-    try {
-      // Step 2: Make a GET request to the getCart API endpoint with the user's ID.
-      const res = await axios.get(`/api/cart/getCart?userId=${userInfo.id}`);
-      const { success, data, message } = res.data;
-
-      // Step 3: Handle the API response.
-      if (success) {
-        // If the API call was successful, update the cart state in Redux.
-        // If `data` is null (user has no cart), Redux will store null.
-        dispatch(setCart(data));
-      } else {
-        // If the API returned a failure (e.g., user not found), log the message
-        // and reset the cart state in Redux to an empty object.
-        console.error("API Error fetching cart:", message);
-        dispatch(setCart({} as Cart));
-      }
-    } catch (error) {
-      // Step 4: Handle any unexpected network or server errors during the API call.
-      console.error("Failed to fetch cart:", error);
-      // Reset the cart state in Redux to ensure a consistent UI on error.
-      dispatch(setCart({} as Cart));
-    }
-  };
-
-  const getAddress = async () => {
-    const controller = new AbortController();
-    if (!userInfo.id) return;
-    try {
-      const addressRes = await axios.get(
-        `/api/address/getAddress?userId=${userInfo.id}`,
-        {
-          signal: controller.signal,
-        }
-      );
-
-      dispatch(setAddress(addressRes.data.address));
-    } catch (err) {
-      if (axios.isCancel(err)) {
-        console.log("Request canceled:", err.message);
-      } else {
-        console.error("Error fetching data:", err);
-      }
-    }
   };
 
   return (

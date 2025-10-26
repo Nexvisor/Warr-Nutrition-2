@@ -180,6 +180,7 @@ const dataSlice = createSlice({
     setIsLoginDialoagOpen: (state, action: PayloadAction<boolean>) => {
       state.isLoginDialoagOpen = action.payload;
     },
+    removeState: () => initialState,
   },
 });
 
@@ -193,6 +194,7 @@ export const {
   setSelectedAddressId,
   setIsLoading,
   setIsLoginDialoagOpen,
+  removeState,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

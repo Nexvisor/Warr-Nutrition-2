@@ -6,67 +6,32 @@ import axios from "axios";
 import React, { useEffect, useState, useTransition } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomToast } from "../comman/customToast";
+import useSaveProfile from "@/hooks/useSaveProfile";
 
 type EdituserCompoType = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 function Edituser({ setIsOpen }: EdituserCompoType) {
+  const { isPending, updateUserInfo } = useSaveProfile(setIsOpen);
   const dispatch = useDispatch();
   const userinfo = useSelector(
     (state: RootState) => state.dataSlice.userInfo
   ) as User;
 
   const [user, setuser] = useState<User>({} as User);
-  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     setuser(userinfo);
   }, [user.id]);
 
-  const saveuser = (e: React.FormEvent<HTMLFormElement>) => {
+  const saveuser = async (e: React.FormEvent<HTMLFormElement>) => {
     // 1. Prevent the default form submission behavior
     e.preventDefault();
-
-    // 2. Start a transition to keep the UI responsive during the async operation
-    startTransition(async () => {
-      try {
-        // 3. Make a POST request to the backend to update user info
-        const res = await axios.post("/api/user/update-user-info", {
-          id: user.id,
-          username: user.username,
-          email: user.email,
-          phoneNumber: user.phoneNumber,
-        });
-
-        const { success, message } = res.data;
-
-        // 4. Handle the response based on success status
-        if (success) {
-          // On success, update the user info in the Redux store
-          dispatch(setUserInfo(user));
-          // Close the dialog
-          setIsOpen(false);
-          // Show a success notification
-          CustomToast({
-            type: "success",
-            message: message || "Information saved!",
-          });
-        } else {
-          // On failure, show an error notification
-          CustomToast({
-            type: "error",
-            message: message || "Failed to save information.",
-          });
-        }
-      } catch (error) {
-        // 5. Catch any network or unexpected server errors
-        console.error("Failed to update user info:", error);
-        CustomToast({
-          type: "error",
-          message: "An unexpected error occurred. Please try again.",
-        });
-      }
-    });
+    await updateUserInfo(
+      user?.username as string,
+      user.phoneNumber,
+      user.email as string
+    );
   };
 
   return (
