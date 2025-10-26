@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 import { ChevronLeft } from "lucide-react";
+
 export default function ProfileHeader() {
   const signOutHandler = useSignOut();
   const userInfo = useSelector((state: any) => state.dataSlice.userInfo);
