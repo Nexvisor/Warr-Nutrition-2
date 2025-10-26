@@ -102,7 +102,7 @@ export interface Order {
   address: Address;
   userId: string;
   user: User;
-  orderId: string;
+  total: number;
   orderItems: OrderItems[];
   razorpay_id?: string | null;
   status: OrderStatus;
@@ -143,6 +143,8 @@ const initialState = {
   productFlavors: [] as ProductFlavor[],
   products: [] as Product[],
   cart: {} as Cart,
+  address: [] as Address[],
+  selectedAddressId: "" as string,
   isLoading: false as boolean,
   isLoginDialoagOpen: false as boolean,
 };
@@ -163,6 +165,12 @@ const dataSlice = createSlice({
     setProducts: (state, action: PayloadAction<Product[]>) => {
       state.products = action.payload;
     },
+    setAddress: (state, action: PayloadAction<Address[]>) => {
+      state.address = action.payload;
+    },
+    setSelectedAddressId: (state, action: PayloadAction<string>) => {
+      state.selectedAddressId = action.payload;
+    },
     setCart: (state, action: PayloadAction<Cart>) => {
       state.cart = action.payload;
     },
@@ -181,6 +189,8 @@ export const {
   setProductFlavor,
   setProducts,
   setCart,
+  setAddress,
+  setSelectedAddressId,
   setIsLoading,
   setIsLoginDialoagOpen,
 } = dataSlice.actions;

@@ -42,7 +42,11 @@ export const GET = async (req: NextRequest) => {
       include: {
         cartItems: {
           include: {
-            product: true, // Include product details for each cart item
+            product: {
+              include: {
+                productImages: true,
+              },
+            },
           },
         },
       },

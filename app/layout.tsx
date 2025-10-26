@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "@/utils/ReduxProvider";
 import { Toaster } from "@/components/ui/sonner";
-import { CheckCircle, XCircle } from "lucide-react";
+import Script from "next/script";
 import Provider from "@/utils/Provider";
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,9 +27,28 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* ✅ JSON-LD Brand Schema for Google */}
+        <Script
+          id="brand-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "WARR NUTRITION",
+              url: "https://warrnutrition.com",
+            }),
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="beforeInteractive"
+        />
         <Provider>
           <ReduxProvider>
             <Toaster />

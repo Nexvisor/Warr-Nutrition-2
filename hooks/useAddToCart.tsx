@@ -27,7 +27,6 @@ export function useAddToCart() {
 
   /**
    * Adds a product to the user's cart.
-   * @param {string} userId - The ID of the current user.
    * @param {string} productId - The ID of the product to add.
    * @param {number} quantity - The quantity to add.
   

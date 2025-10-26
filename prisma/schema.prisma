@@ -108,7 +108,7 @@ model Order{
   address Address @relation("orderAddress",fields: [addressId], references: [id])
   userId String @db.ObjectId
   user User @relation(fields: [userId], references: [id])
-  orderId String @db.ObjectId
+  total Int
   orderItems OrderItems[]
   razorpay_id String?
   status    OrderStatus  @default(PENDING)

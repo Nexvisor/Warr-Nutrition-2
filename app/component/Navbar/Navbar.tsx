@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Cart,
@@ -12,6 +12,7 @@ import {
   setProductCategory,
   setProductFlavor,
   setProducts,
+  setAddress,
 } from "@/utils/DataSlice";
 import { Badge } from "@/components/ui/badge";
 
@@ -59,7 +60,18 @@ function Navbar() {
   }, []);
 
   useEffect(() => {
-    getCart();
+    const fetchData = async () => {
+      dispatch(setIsLoading(true));
+      try {
+        await Promise.all([getCart(), getAddress()]);
+      } catch (e: any) {
+        console.log("Error is fetching data " + e.message);
+      } finally {
+        dispatch(setIsLoading(false));
+      }
+    };
+
+    fetchData();
   }, [userInfo.id]);
 
   const getPrductCategory = async () => {
@@ -111,6 +123,27 @@ function Navbar() {
     }
   };
 
+  const getAddress = async () => {
+    const controller = new AbortController();
+    if (!userInfo.id) return;
+    try {
+      const addressRes = await axios.get(
+        `/api/address/getAddress?userId=${userInfo.id}`,
+        {
+          signal: controller.signal,
+        }
+      );
+
+      dispatch(setAddress(addressRes.data.address));
+    } catch (err) {
+      if (axios.isCancel(err)) {
+        console.log("Request canceled:", err.message);
+      } else {
+        console.error("Error fetching data:", err);
+      }
+    }
+  };
+
   return (
     <header className="border-b sticky top-0 z-50 bg-white">
       <div className="px-4 py-4 flex items-center justify-between md:px-0">
@@ -143,7 +176,7 @@ function Navbar() {
                 <Shield className="flex md:hidden" />
                 <span className="hidden md:flex text-sm">Authenticity</span>
               </Link>
-              {status === "authenticated" && (
+              {(status === "authenticated" || userInfo.id) && (
                 <>
                   <Link
                     href="/account"
@@ -170,7 +203,7 @@ function Navbar() {
                 </>
               )}
 
-              {status !== "authenticated" && (
+              {status !== "authenticated" && !userInfo.id && (
                 <Button
                   className="bg-gradient-to-br from-[#1e7ae4] to-[#052f5e] text-white px-6 py-2 rounded-md shadow-md hover:opacity-90 transition"
                   onClick={() =>

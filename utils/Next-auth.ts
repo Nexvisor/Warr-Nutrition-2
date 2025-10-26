@@ -27,10 +27,10 @@ export const Next_Auth: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 24, // ✅ 1 day session expiry (in seconds)
+    maxAge: 30 * 24 * 60 * 60, // ✅ 30 day session expiry (in seconds)
   },
   jwt: {
-    maxAge: 60 * 60 * 24, // ✅ 1 day JWT expiry (in seconds)
+    maxAge: 30 * 24 * 60 * 60, // ✅ 30 day JWT expiry (in seconds)
   },
   callbacks: {
     jwt: ({ token, user }) => {

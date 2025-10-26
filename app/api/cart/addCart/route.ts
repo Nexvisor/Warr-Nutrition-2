@@ -76,7 +76,11 @@ export const POST = async (req: NextRequest) => {
           quantity,
         },
         include: {
-          product: true,
+          product: {
+            include: {
+              productImages: true,
+            },
+          },
         },
       });
     }

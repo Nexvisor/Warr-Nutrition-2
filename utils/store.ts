@@ -8,7 +8,14 @@ import { persistReducer, persistStore } from "redux-persist";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["productCategories", "productFlavors", "products"],
+  whitelist: [
+    "productCategories",
+    "productFlavors",
+    "products",
+    "cart",
+    "address",
+    "userInfo",
+  ],
 };
 
 const rootReducer = combineReducers({
