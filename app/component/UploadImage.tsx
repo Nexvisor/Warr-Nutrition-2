@@ -10,7 +10,8 @@ import {
   Loader,
   CheckCircle,
 } from "lucide-react";
-import { FileWithPreview } from "./AddProductSection/AddProductCompo";
+
+import { FileWithPreview } from "@/FrontendSchema/FileWithPreview.Schema";
 
 interface ImageUploadType {
   files: FileWithPreview[];
