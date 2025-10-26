@@ -1,20 +1,20 @@
 import { Product } from "@/utils/DataSlice";
-import React, { useTransition } from "react";
+import React from "react";
 import { ImageCompo } from "./ImageCompo";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { getActualPrice } from "@/helper/getActualPrice";
+import { useAddToCart } from "@/hooks/useAddToCart";
 
 function ProductCard({ product }: { product: Product }) {
-  const [isPending, startTransition] = useTransition();
+  const { isPending, addToCart } = useAddToCart();
   const isOutofStuck = product.stock <= 0;
 
-  const actualPrice = Math.floor(
-    product.price - (product.discountPercentage / 100) * product.price
-  );
+  const actualPrice = getActualPrice(product.price, product.discountPercentage);
 
   return (
     <div className="group relative bg-white border rounded-lg overflow-hidden transition-all hover:shadow-md h-full hover:scale-105">
-      <Link href={`/Product/${product.id}`} className="block p-2 md:p-4 flex-1">
+      <Link href={`/product/${product.id}`} className="block p-2 md:p-4 flex-1">
         <div className="aspect-square relative mb-2 md:mb-4 flex items-center justify-center">
           <ImageCompo
             src={product.productImages[0].url}
@@ -53,6 +53,7 @@ function ProductCard({ product }: { product: Product }) {
             className="w-full bg-gradient-to-br from-[#1e7ae4] to-[#052f5e] 
                    text-white px-6 py-2 rounded-md shadow-md 
                    hover:opacity-90 transition"
+            onClick={() => addToCart(product.id, 1)}
             disabled={isPending}
           >
             {isPending ? "Please Wait..." : "Add to Cart"}

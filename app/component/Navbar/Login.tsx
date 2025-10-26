@@ -16,6 +16,7 @@ import { Mail, Loader2, CheckCircle, XCircle } from "lucide-react";
 import axios from "axios";
 import { toast } from "sonner";
 import { OTPVerification } from "@/app/component/comman/OtpVerification";
+import { CustomToast } from "../comman/customToast";
 
 // Taking email only for login
 const FormSchema = z.object({
@@ -50,9 +51,10 @@ function Login() {
         // If registration/OTP request succeeded
         if (success) {
           // Show success notification with green color and icon
-          toast.success(message, {
+          CustomToast({
+            message,
+            type: "success",
             icon: <CheckCircle className="w-5 h-5 text-green-600" />,
-            style: { border: "1px solid #22C55E", color: "#16A34A" },
           });
 
           // Save the entered email in state
@@ -68,9 +70,10 @@ function Login() {
           localStorage.setItem("userId", user.id);
         } else {
           // If server responded with failure, show error toast with red color and icon
-          toast.error(message || "Something went wrong.", {
+          CustomToast({
+            message,
+            type: "error",
             icon: <XCircle className="w-5 h-5 text-red-600" />,
-            style: { border: "1px solid #F87171", color: "#B91C1C" },
           });
         }
       } catch (error: any) {
@@ -78,14 +81,11 @@ function Login() {
         console.error("Login error:", error);
 
         // Show an error toast with message from server or default message
-        toast.error(
-          error.response?.data?.message ||
-            "Failed to send OTP. Please try again.",
-          {
-            icon: <XCircle className="w-5 h-5 text-red-600" />,
-            style: { border: "1px solid #F87171", color: "#B91C1C" },
-          }
-        );
+        CustomToast({
+          message: "Failed to send OTP. Please try again",
+          type: "error",
+          icon: <XCircle className="w-5 h-5 text-red-600" />,
+        });
       }
     });
   }

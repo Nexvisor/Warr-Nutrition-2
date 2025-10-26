@@ -3,8 +3,10 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  Cart,
   ProductCategory,
   ProductFlavor,
+  setCart,
   setIsLoading,
   setIsLoginDialoagOpen,
   setProductCategory,
@@ -34,6 +36,7 @@ function Navbar() {
   const isLoginDialogOpen = useSelector(
     (state: RootState) => state.dataSlice.isLoginDialoagOpen
   );
+  const userInfo = useSelector((state: RootState) => state.dataSlice.userInfo);
   const cart = useSelector((state: RootState) => state.dataSlice.cart);
 
   useEffect(() => {
@@ -55,6 +58,10 @@ function Navbar() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    getCart();
+  }, [userInfo.id]);
+
   const getPrductCategory = async () => {
     const res = await axios.get("/api/Products/get-category");
     const { productCategorys } = res.data;
@@ -70,6 +77,38 @@ function Navbar() {
     const res = await axios.get("/api/Products/get-products");
     const { products } = res.data;
     dispatch(setProducts(products));
+  };
+
+  /**
+   * Fetches the user's cart from the API and updates the Redux store.
+   * This function is called when the component mounts or when the user's info changes.
+   */
+  const getCart = async () => {
+    // Step 1: Guard clause to prevent API calls if there is no logged-in user.
+    if (!userInfo.id) return;
+
+    try {
+      // Step 2: Make a GET request to the getCart API endpoint with the user's ID.
+      const res = await axios.get(`/api/cart/getCart?userId=${userInfo.id}`);
+      const { success, data, message } = res.data;
+
+      // Step 3: Handle the API response.
+      if (success) {
+        // If the API call was successful, update the cart state in Redux.
+        // If `data` is null (user has no cart), Redux will store null.
+        dispatch(setCart(data));
+      } else {
+        // If the API returned a failure (e.g., user not found), log the message
+        // and reset the cart state in Redux to an empty object.
+        console.error("API Error fetching cart:", message);
+        dispatch(setCart({} as Cart));
+      }
+    } catch (error) {
+      // Step 4: Handle any unexpected network or server errors during the API call.
+      console.error("Failed to fetch cart:", error);
+      // Reset the cart state in Redux to ensure a consistent UI on error.
+      dispatch(setCart({} as Cart));
+    }
   };
 
   return (

@@ -26,6 +26,7 @@ import { toast } from "sonner";
 import { signIn } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { setIsLoginDialoagOpen } from "@/utils/DataSlice";
+import { CustomToast } from "./customToast";
 
 interface OTPVerificationProps {
   email: string;
@@ -112,9 +113,10 @@ export function OTPVerification({
         const { success, message } = res.data;
 
         if (!success) {
-          toast.error(message, {
+          CustomToast({
+            message,
+            type: "error",
             icon: <XCircle className="w-5 h-5 text-red-600" />,
-            style: { border: "1px solid #F87171", color: "#B91C1C" },
           });
           return;
         }
@@ -126,21 +128,20 @@ export function OTPVerification({
 
         localStorage.setItem("userId", "");
         dispatch(setIsLoginDialoagOpen(false));
-
-        toast.success(message, {
+        CustomToast({
+          message,
+          type: "success",
           icon: <CheckCircle className="w-5 h-5 text-green-600" />,
-          style: { border: "1px solid #22C55E", color: "#16A34A" },
         });
       } catch (error: any) {
         console.log("OTP verification error:", error);
-        toast.error(
-          error.response?.data?.message ||
+        CustomToast({
+          message:
+            error.response?.data?.message ||
             "Something went wrong during OTP verification",
-          {
-            icon: <XCircle className="w-5 h-5 text-red-600" />,
-            style: { border: "1px solid #F87171", color: "#B91C1C" },
-          }
-        );
+          type: "error",
+          icon: <XCircle className="w-5 h-5 text-red-600" />,
+        });
       }
     });
   }

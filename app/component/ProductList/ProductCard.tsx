@@ -2,11 +2,12 @@ import { Product } from "@/utils/DataSlice";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/utils/store";
 import DialogCompo from "../DialogCompo";
 import EditDialog from "./EditDialog";
+
 interface ProductCardType {
   product: Product;
 }
