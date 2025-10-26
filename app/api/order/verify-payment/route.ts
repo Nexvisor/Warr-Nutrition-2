@@ -3,7 +3,7 @@ import crypto from "crypto";
 import { prisma } from "@/utils/prisma";
 import { sendMessage } from "@/helper/sendMessage";
 import { getHours, getMinutes } from "date-fns";
-
+import { getActualPrice } from "@/helper/getActualPrice";
 export const POST = async (req: NextRequest) => {
   try {
     const {
@@ -64,7 +64,10 @@ export const POST = async (req: NextRequest) => {
         orderId: newOrder.id,
         productId: product.product.id,
         quantity: product.quantity,
-        price: product.product.price,
+        orderPrice: getActualPrice(
+          product.product.price,
+          product.product.discountPercentage
+        ),
       })),
     });
 

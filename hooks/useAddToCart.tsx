@@ -19,11 +19,16 @@ export function useAddToCart() {
   const dispatch = useDispatch();
 
   // 🔹 Get data from Redux or wherever you store them
-  const { cartItems, userInfo, products } = useSelector((state: RootState) => ({
-    cartItems: state.dataSlice.cart.cartItems,
+  const { userInfo, products } = useSelector((state: RootState) => ({
     userInfo: state.dataSlice.userInfo,
     products: state.dataSlice.products,
   }));
+  const cart = useSelector((state: RootState) => state.dataSlice.cart);
+  const cartItems = cart?.cartItems
+    ? Array.isArray(cart?.cartItems)
+      ? cart?.cartItems
+      : ([] as CartItems[])
+    : ([] as CartItems[]);
 
   /**
    * Adds a product to the user's cart.

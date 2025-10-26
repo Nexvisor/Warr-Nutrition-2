@@ -42,8 +42,10 @@ export default function CartPage() {
   const router = useRouter();
 
   const cart = useSelector((state: any) => state.dataSlice.cart) as Cart;
-  let cartProducts = Array.isArray(cart.cartItems)
-    ? (cart.cartItems as CartItems[])
+  let cartProducts = cart?.cartItems
+    ? Array.isArray(cart?.cartItems)
+      ? cart?.cartItems
+      : ([] as CartItems[])
     : ([] as CartItems[]);
 
   const userInfo = useSelector(
