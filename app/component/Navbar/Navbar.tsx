@@ -219,7 +219,7 @@ function Navbar() {
 
               {status !== "authenticated" && !userInfo.id && (
                 <Button
-                  className="bg-gradient-to-br from-[#1e7ae4] to-[#052f5e] text-white px-6 py-2 rounded-md shadow-md hover:opacity-90 transition"
+                  className="bg-gradient-to-br from-[#B50D27] to-[#DA203A] text-white px-6 py-2 rounded-md shadow-md hover:opacity-90 transition"
                   onClick={() =>
                     dispatch(setIsLoginDialoagOpen(!isLoginDialogOpen))
                   }

@@ -9,15 +9,15 @@ import { Button } from "@/components/ui/button";
 const slides = [
   {
     desktop:
-      "https://ik.imagekit.io/fcuhugcgk/WAR_Nutrition/Frame%20209%20(1).png?updatedAt=1748336126369",
+      "https://ik.imagekit.io/fcuhugcgk/banner_2_dek.png?updatedAt=1761758522855",
     mobile:
-      "https://ik.imagekit.io/fcuhugcgk/WAR_Nutrition/Frame%20211.png?updatedAt=1748338026695",
+      "https://ik.imagekit.io/fcuhugcgk/banner_1_mobile.png?updatedAt=1761758553357",
   },
   {
     desktop:
-      "https://ik.imagekit.io/fcuhugcgk/WAR_Nutrition/Frame%20209%20(1).png?updatedAt=1748336126369",
+      "https://ik.imagekit.io/fcuhugcgk/Banner_1_desk.png?updatedAt=1761758523735",
     mobile:
-      "https://ik.imagekit.io/fcuhugcgk/WAR_Nutrition/Frame%20211.png?updatedAt=1748338026695",
+      "https://ik.imagekit.io/fcuhugcgk/Banner_1_desk.png?updatedAt=1761758523735",
   },
   {
     desktop:
@@ -100,7 +100,7 @@ export function HeroSection() {
             <button
               key={index}
               className={`w-2.5 h-2.5 rounded-full ${
-                index === currentSlide ? "bg-blue-500" : "bg-white/40"
+                index === currentSlide ? "bg-rose-500" : "bg-white/40"
               }`}
               onClick={() => setCurrentSlide(index)}
             >

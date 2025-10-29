@@ -90,7 +90,7 @@ function ProductDetails() {
         {/* Back Button */}
         <Link
           href="/"
-          className="inline-flex items-center text-blue-600 hover:text-blue-800 mb-6 md:mb-8 transition-colors"
+          className="inline-flex items-center text-rose-700 hover:text-rose-800 mb-6 md:mb-8 transition-colors"
         >
           <ChevronLeft className="w-4 h-4 mr-1" />
           <span className="text-sm md:text-base">Back to Home</span>
@@ -188,7 +188,7 @@ function ProductDetails() {
           <div className="flex flex-col space-y-4 md:space-y-6">
             {/* Category Badge */}
             <div>
-              <span className="inline-block bg-blue-600 text-white text-xs md:text-sm font-semibold px-3 py-1.5 rounded-full">
+              <span className="inline-block bg-rose-800 text-white text-xs md:text-sm font-semibold px-3 py-1.5 rounded-full">
                 {filterProduct?.category.category}
               </span>
             </div>
@@ -275,14 +275,14 @@ function ProductDetails() {
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
               {isOutofStuck ? (
                 <Button
-                  className="w-full bg-gradient-to-br from-[#1e7ae4] to-[#052f5e] text-white px-6 py-2 rounded-md shadow-md hover:opacity-90 transition"
+                  className="w-full bg-rose-700 text-white px-6 py-2 rounded-md shadow-md hover:opacity-90 transition"
                   disabled
                 >
                   Out of Stock
                 </Button>
               ) : (
                 <Button
-                  className="w-full bg-gradient-to-br from-[#1e7ae4] to-[#052f5e] text-white px-6 py-2 rounded-md shadow-md hover:opacity-90 transition"
+                  className="w-full bg-rose-800 text-white px-6 py-2 rounded-md shadow-md hover:opacity-90 transition"
                   onClick={() => addToCart(filterProduct.id, quantity)}
                 >
                   <ShoppingCart className="mr-2 h-4 w-4" />{" "}
@@ -358,13 +358,13 @@ function ProductDetails() {
           <TabsList className="bg-slate-100 text-navy-700 flex gap-4">
             <TabsTrigger
               value="benefits"
-              className="data-[state=active]:bg-blue-700 data-[state=active]:text-white"
+              className="data-[state=active]:bg-rose-800 data-[state=active]:text-white"
             >
               Key Benefits
             </TabsTrigger>
             <TabsTrigger
               value="nutrition"
-              className="data-[state=active]:bg-blue-700 data-[state=active]:text-white"
+              className="data-[state=active]:bg-rose-800 data-[state=active]:text-white"
             >
               Nutrition Information
             </TabsTrigger>

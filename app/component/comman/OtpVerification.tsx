@@ -151,13 +151,11 @@ export function OTPVerification({
       <div>
         {/* Header */}
         <div className="text-center space-y-4 mb-6">
-          <h2 className="text-2xl font-bold bg-gradient-to-r from-[#173C80] to-[#32C5F8] bg-clip-text text-transparent">
-            {title}
-          </h2>
+          <h2 className="text-2xl font-bold text-[#D7223B]">{title}</h2>
           <p className="text-gray-600">{description}</p>
           <p className="text-sm text-gray-500">
             Code sent to:{" "}
-            <span className="font-medium text-[#173C80]">{email}</span>
+            <span className="font-medium text-rose-800">{email}</span>
           </p>
         </div>
 
@@ -197,7 +195,7 @@ export function OTPVerification({
             <Button
               type="submit"
               disabled={isPending}
-              className="w-full bg-gradient-to-r from-[#173C80] to-[#32C5F8] hover:from-[#1a4090] hover:to-[#28b5e8] text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 disabled:opacity-50"
+              className="w-full bg-gradient-to-br from-[#B50D27] to-[#DA203A] hover:bg-gradient-to-br hover:from-[#D63A4E] hover:to-[#EF5161] text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 disabled:opacity-50"
             >
               {isPending ? (
                 <div className="flex items-center justify-center space-x-2">
@@ -218,9 +216,7 @@ export function OTPVerification({
               {timeLeft > 0 ? (
                 <p className="text-sm text-gray-500">
                   Resend code in{" "}
-                  <span className="font-medium text-[#173C80]">
-                    {timeLeft}s
-                  </span>
+                  <span className="font-medium text-rose-800">{timeLeft}s</span>
                 </p>
               ) : (
                 <Button
@@ -228,7 +224,7 @@ export function OTPVerification({
                   variant="link"
                   onClick={handleResendOtp}
                   disabled={isResending}
-                  className="text-[#173C80] hp-0"
+                  className="text-red-800 hp-0"
                 >
                   {isResending ? (
                     <div className="flex items-center space-x-1">

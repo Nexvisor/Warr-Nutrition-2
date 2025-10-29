@@ -14,7 +14,7 @@ function NewProductSection() {
 
   return (
     <section className="py-10 px-4 sm:px-6 md:px-10 lg:px-16">
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-[#1E5BA8] mb-10">
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-[#D7223B] mb-10">
         PREMIUM BLACK SERIES
       </h2>
 

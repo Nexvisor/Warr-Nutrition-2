@@ -50,7 +50,7 @@ function ProductCard({ product }: { product: Product }) {
           </Button>
         ) : (
           <Button
-            className="w-full bg-gradient-to-br from-[#1e7ae4] to-[#052f5e] 
+            className="w-full bg-gradient-to-br from-[#B50D27] to-[#DA203A]
                    text-white px-6 py-2 rounded-md shadow-md 
                    hover:opacity-90 transition"
             onClick={() => addToCart(product.id, 1)}

@@ -1,6 +1,12 @@
+"use client";
+import { RootState } from "@/utils/store";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 function Footer() {
+  const categories = useSelector(
+    (state: RootState) => state.dataSlice.productCategories
+  );
   return (
     <footer className="bg-black text-gray-100 pt-12 pb-6">
       <div className="container mx-auto px-4 md:px-32">
@@ -55,54 +61,16 @@ function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Categories</h3>
             <ul className="space-y-2">
-              <li>
-                <Link
-                  href="/Protein"
-                  className="text-gray-400 hover:text-white"
-                >
-                  Protein
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/Mass Gainer"
-                  className="text-gray-400 hover:text-white"
-                >
-                  Mass Gainers
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/Pre Workout"
-                  className="text-gray-400 hover:text-white"
-                >
-                  Pre-Workout
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/Fish Oil"
-                  className="text-gray-400 hover:text-white"
-                >
-                  Fish Oil
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/Multi Vitamin"
-                  className="text-gray-400 hover:text-white"
-                >
-                  Vitamins & Minerals
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/Creatine"
-                  className="text-gray-400 hover:text-white"
-                >
-                  Creatine
-                </Link>
-              </li>
+              {categories.map((categorie) => (
+                <li key={categorie.id}>
+                  <Link
+                    href={`${String(categorie.category).toLowerCase()}`}
+                    className="text-gray-400 hover:text-white"
+                  >
+                    {categorie.category}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
@@ -111,7 +79,7 @@ function Footer() {
               <li className="flex items-start">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 mr-2 mt-0.5 text-blue-500"
+                  className="h-5 w-5 mr-2 mt-0.5 text-rose-700"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -128,7 +96,7 @@ function Footer() {
               <li className="flex items-start">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 mr-2 mt-0.5 text-blue-500"
+                  className="h-5 w-5 mr-2 mt-0.5 text-rose-700"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
