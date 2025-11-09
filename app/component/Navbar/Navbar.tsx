@@ -206,7 +206,7 @@ function Navbar() {
                   >
                     <ShoppingCart className="h-5 w-5" />
                     <span className="hidden md:inline text-sm">Cart</span>
-                    <Badge className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs h-5 w-5 flex items-center justify-center rounded-full">
+                    <Badge className="absolute -top-2 -right-2 bg-rose-800 text-white text-xs h-5 w-5 flex items-center justify-center rounded-full">
                       {/* checking cart is empty or not */}
                       {Array.isArray(cart?.cartItems) &&
                       cart.cartItems.length > 0

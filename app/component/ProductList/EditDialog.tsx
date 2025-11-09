@@ -88,7 +88,7 @@ const ProductSchema = z.object({
         value: z.string().min(1, { message: "Highlight is required" }),
       })
     )
-    .min(1, { message: "At least one product highlight is required" }),
+    .optional(),
   nutritionInformation: z
     .array(NutritionSchema)
     .min(1, { message: "At least one nutrition item is required" }),
@@ -494,7 +494,12 @@ function EditDialog({ dialogCloseHandler, product }: EditDialogProps) {
         Edit Product
       </h1>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(updateProduct)} className="space-y-6">
+        <form
+          onSubmit={form.handleSubmit(updateProduct, (errors: any) => {
+            console.log("Validation errors:", errors);
+          })}
+          className="space-y-6"
+        >
           <Card>
             <CardHeader>
               <CardTitle>Product Information</CardTitle>

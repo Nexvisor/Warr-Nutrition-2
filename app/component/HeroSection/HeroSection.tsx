@@ -17,13 +17,13 @@ const slides = [
     desktop:
       "https://ik.imagekit.io/fcuhugcgk/Banner_1_desk.png?updatedAt=1761758523735",
     mobile:
-      "https://ik.imagekit.io/fcuhugcgk/Banner_1_desk.png?updatedAt=1761758523735",
+      "https://ik.imagekit.io/fcuhugcgk/banner_2_mobile.png?updatedAt=1762674906333",
   },
   {
     desktop:
-      "https://ik.imagekit.io/fcuhugcgk/WAR_Nutrition/Frame%20209%20(1).png?updatedAt=1748336126369",
+      "https://ik.imagekit.io/fcuhugcgk/banner_3.png?updatedAt=1762676066800",
     mobile:
-      "https://ik.imagekit.io/fcuhugcgk/WAR_Nutrition/Frame%20211.png?updatedAt=1748338026695",
+      "https://ik.imagekit.io/fcuhugcgk/banner_3_mobile.png?updatedAt=1762676294754",
   },
 ];
 

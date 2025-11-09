@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "@/utils/store";
 import { Product, ProductImages } from "@/utils/DataSlice";
 import {
@@ -19,8 +19,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { getActualPrice } from "@/helper/getActualPrice";
-import { ImageCompo } from "@/app/component/comman/ImageCompo";
 import { useAddToCart } from "@/hooks/useAddToCart";
+import ChangeProduct from "@/app/component/ChangeProduct/ChangeProduct";
+
+export interface selectedProductType {
+  weight: string;
+  flavor: string;
+}
 
 function ProductDetails() {
   const { id } = useParams();
@@ -28,27 +33,44 @@ function ProductDetails() {
   const [imagesLoaded, setImagesLoaded] = useState<Record<number, boolean>>({});
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
   const [currentImageIndex, setcurrentImageIndex] = useState(0);
+  const [selectedProduct, setSelectedProduct] = useState<selectedProductType>({
+    weight: "",
+    flavor: "",
+  });
   const [quantity, setQuantity] = useState<number>(1);
 
   const products = useSelector((state: RootState) => state.dataSlice.products);
-  const cart = useSelector((state: RootState) => state.dataSlice.cart);
-  const cartItems = cart?.cartItems;
+
   const { isPending, addToCart } = useAddToCart();
 
-  const filterProduct = products.find(
-    (product: Product) => product.id === id
-  ) as Product;
+  const filterProduct = useMemo(() => {
+    let productInfo = products.find((product: Product) => product.id === id);
+    if (selectedProduct.flavor !== "" && selectedProduct.weight !== "") {
+      productInfo = products.find(
+        (product: Product) =>
+          product.flavor.flavor === selectedProduct.flavor &&
+          product.weight === selectedProduct.weight
+      );
+    }
 
-  const sameCategoryPrduct = products.filter(
-    (product: Product) =>
-      product.category.id === filterProduct.category.id && product.id !== id
+    return productInfo as Product;
+  }, [selectedProduct, id]);
+
+  const similarProducts = products.filter(
+    (product: Product) => product.category.id === filterProduct.category.id
   ) as Product[];
 
   const actualPrice = getActualPrice(
     filterProduct.price,
     filterProduct.discountPercentage
   );
-  const userInfo = useSelector((state: RootState) => state.dataSlice.userInfo);
+
+  useEffect(() => {
+    setSelectedProduct({
+      weight: filterProduct.weight,
+      flavor: filterProduct.flavor.flavor,
+    });
+  }, []);
 
   const isOutofStuck = filterProduct.stock <= 0;
 
@@ -201,7 +223,7 @@ function ProductDetails() {
             {/* Rating */}
             <div className="flex items-center gap-3">
               <div className="flex">
-                {[1, 2, 3, 4, 5].map((star) => (
+                {[1, 2, 3].map((star) => (
                   <Star
                     key={star}
                     className="h-4 w-4 md:h-5 md:w-5 fill-yellow-400 text-yellow-400"
@@ -223,25 +245,6 @@ function ProductDetails() {
               <span className="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded">
                 {filterProduct.discountPercentage}% OFF
               </span>
-            </div>
-
-            {/* Description */}
-            <p className="text-gray-700 mb-6">{filterProduct.description}</p>
-
-            {/* Product Highlights */}
-            <div className="bg-slate-100 p-4 rounded-lg mb-6">
-              <h3 className="font-semibold text-navy-900 mb-2">
-                Product Highlights
-              </h3>
-              <ul className="list-disc pl-5 space-y-1">
-                {filterProduct.productHighlights.map(
-                  (highlight: string, index) => (
-                    <li key={index} className="text-gray-700">
-                      {highlight}
-                    </li>
-                  )
-                )}
-              </ul>
             </div>
 
             {/* Quantity Selector */}
@@ -290,72 +293,24 @@ function ProductDetails() {
                 </Button>
               )}
             </div>
+
+            <ChangeProduct
+              similarProducts={similarProducts}
+              selectedProduct={selectedProduct}
+              setSelectedProduct={setSelectedProduct}
+            />
           </div>
         </div>
-
-        {/* Similar Products */}
-        {sameCategoryPrduct.length > 0 && (
-          <div className="mb-12 md:mb-16">
-            <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-6 md:mb-8 text-navy-900">
-              Similar Products
-            </h2>
-
-            <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
-              <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 pb-4 md:pb-0">
-                {sameCategoryPrduct.map((product: Product) => (
-                  <Link
-                    href={`/product/${product.id}`}
-                    key={product.id}
-                    className="flex-shrink-0 w-[280px] md:w-auto bg-white rounded-xl border-2 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-                  >
-                    <div className="p-4 md:p-5 flex flex-col h-full">
-                      {/* Product Image */}
-                      <div className="relative w-full aspect-square mb-4 rounded-lg overflow-hidden">
-                        <ImageCompo
-                          src={
-                            product.productImages?.[0]?.url ||
-                            "/placeholder.png"
-                          }
-                          alt={product.title}
-                          className="object-contain w-full h-full p-2"
-                        />
-                      </div>
-
-                      {/* Product Title */}
-                      <h3 className="font-semibold text-gray-800 line-clamp-2 text-sm md:text-base mb-3 min-h-[2.5rem]">
-                        {product.title}
-                      </h3>
-
-                      {/* Price + Discount */}
-                      <div className="flex items-center gap-2 mb-2">
-                        <p className="font-bold text-lg md:text-xl text-gray-900">
-                          ₹
-                          {getActualPrice(
-                            product.price,
-                            product.discountPercentage
-                          )}
-                        </p>
-                        <p className="bg-green-100 text-green-700 text-xs md:text-sm font-semibold px-2 py-1 rounded-md">
-                          {product.discountPercentage}% OFF
-                        </p>
-                      </div>
-
-                      {/* Weight + Flavor */}
-                      <div className="text-xs md:text-sm text-gray-600 space-y-1 mt-auto">
-                        <p className="font-medium">{product.weight}</p>
-                        <p className="text-gray-500">{product.flavor.flavor}</p>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* Tabs Section */}
         <Tabs defaultValue="benefits" className="mt-12">
           <TabsList className="bg-slate-100 text-navy-700 flex gap-4">
+            <TabsTrigger
+              value="Description"
+              className="data-[state=active]:bg-rose-800 data-[state=active]:text-white"
+            >
+              Descrition
+            </TabsTrigger>
             <TabsTrigger
               value="benefits"
               className="data-[state=active]:bg-rose-800 data-[state=active]:text-white"
@@ -368,7 +323,18 @@ function ProductDetails() {
             >
               Nutrition Information
             </TabsTrigger>
+            <TabsTrigger
+              value="productHighlights"
+              className="data-[state=active]:bg-rose-800 data-[state=active]:text-white"
+            >
+              Product Highlights
+            </TabsTrigger>
           </TabsList>
+          <TabsContent value="Description">
+            {/* Description */}
+            <p className="text-gray-700 mb-6">{filterProduct.description}</p>
+          </TabsContent>
+
           <TabsContent value="benefits" className="mt-6">
             <Card className="p-6">
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -412,6 +378,18 @@ function ProductDetails() {
                 </table>
               </div>
             </Card>
+          </TabsContent>
+          <TabsContent value="productHighlights">
+            {/* Product Highlights */}
+            <ul className="list-disc pl-5 space-y-1">
+              {filterProduct.productHighlights.map(
+                (highlight: string, index) => (
+                  <li key={index} className="text-gray-700">
+                    {highlight}
+                  </li>
+                )
+              )}
+            </ul>
           </TabsContent>
         </Tabs>
       </div>

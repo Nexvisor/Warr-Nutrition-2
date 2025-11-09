@@ -1,27 +1,38 @@
 "use client";
 import React from "react";
 import { CategoryCard } from "@/app/component/CategorySection/CategoryCard";
-import { useState, useTransition, useEffect, useRef } from "react";
-import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
-// import { setGroupedByCategory, setProducts } from "@/utils/DataSlice";
-
-import { Product } from "@/utils/DataSlice";
+import { useRef } from "react";
+import PreWorkout from "@/assets/Warr/pre.png";
+import MultiVitamin from "@/assets/Warr/multi_vitamin.png";
+import MassGainer from "@/assets/Warr/ganner.png";
+import ISO from "@/assets/Warr/ISO.png";
+import Nitro from "@/assets/Warr/nitro.png";
+import Protine from "@/assets/Warr/protine.png";
+import { useSelector } from "react-redux";
+import { ProductCategory } from "@/utils/DataSlice";
 import { RootState } from "@/utils/store";
 
+type CategoryType = ProductCategory & {
+  image: string;
+};
 export function CategorySection() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const productCategories = useSelector(
     (state: RootState) => state.dataSlice.productCategories
   );
+  const categoryImages: Record<string, string> = {
+    "Pre Workout": PreWorkout.src,
+    "Mass Gainer": MassGainer.src,
+    "Multi Vitamin": MultiVitamin.src,
+    ISO: ISO.src,
+    Nitro: Nitro.src,
+    "Whey Performance": Protine.src,
+  };
 
-  const dispatch = useDispatch();
-  const groupedByCategory = useSelector(
-    (state: any) => state.dataSlice.groupedByCategory
-  );
-
-  const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState(null);
+  const categories = productCategories.map((categorie) => ({
+    ...categorie,
+    image: categoryImages[categorie.category] || "/assets/Warr/default.svg",
+  })) as CategoryType[];
 
   //   const loadAndSetProductData = async () => {
   //     try {
@@ -57,15 +68,15 @@ export function CategorySection() {
   //   }, []);
 
   return (
-    <section className="py-12">
+    <section className="md:py-12">
       <div className="container mx-auto px-3">
         {/* Desktop view - grid */}
-        <div className="hidden md:flex flex-wrap justify-center gap-15">
-          {productCategories.map((item) => (
+        <div className="hidden md:flex flex-wrap justify-center gap-18">
+          {categories.map((item: CategoryType) => (
             <CategoryCard
               key={item.id}
               title={item.category}
-              image={"/fallback.jpg"}
+              image={item.image}
               href={`/${item.id}`}
             />
           ))}
@@ -88,11 +99,11 @@ export function CategorySection() {
           className="md:hidden flex overflow-x-auto pb-4 gap-3 scrollbar-hide"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          {productCategories.map((item) => (
+          {categories.map((item: CategoryType) => (
             <CategoryCard
               key={item.id}
               title={item.category}
-              image={"/fallback.jpg"}
+              image={item.image || "/fallback.jpg"}
               href={`/${item.id}`}
             />
           ))}
