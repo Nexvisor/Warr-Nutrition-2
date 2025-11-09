@@ -7,9 +7,9 @@ import ProductCard from "@/app/component/comman/ProductCard";
 import { SkeletonCard } from "../SkeletonCard/SkeletonCard";
 const PRODUCT_IDS = [
   "68ebb9c55c6b8a482d57503d",
-  "68ebd80ab7fadd015afde8de",
-  "69107402eb37591ec8b7da8c",
-  "691078c9eb37591ec8b7daa0",
+  "6910bdb415e865c04f749af5",
+  "6910bc0915e865c04f749ae5",
+  "6910be8b15e865c04f749b04",
 ];
 function Products() {
   const products = useSelector((state: RootState) => state.dataSlice.products);

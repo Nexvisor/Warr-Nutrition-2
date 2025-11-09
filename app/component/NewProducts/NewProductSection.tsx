@@ -16,7 +16,7 @@ function NewProductSection() {
   const isLoading = !products.length || !newProducts.length;
 
   return (
-    <section className="px-4 sm:px-6 md:px-10 lg:px-16 md:py-10">
+    <section className="px-4 sm:px-6 md:px-10 lg:px-16 mb-3">
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-[#D7223B] mb-10">
         PREMIUM BLACK SERIES
       </h2>

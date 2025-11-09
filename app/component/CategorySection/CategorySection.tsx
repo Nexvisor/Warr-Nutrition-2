@@ -76,27 +76,16 @@ export function CategorySection() {
             <CategoryCard
               key={item.id}
               title={item.category}
-              image={item.image}
-              href={`/${item.id}`}
+              image={item.image || "/fallback.jpg"}
+              href={`/${item.category}`}
             />
           ))}
-
-          {/* {Object.entries(groupedByCategory as Record<string, Product[]>).map(
-            ([category, products]) => (
-              <CategoryCard
-                key={category}
-                title={category}
-                image={"/fallback.jpg"}
-                href={`/${category}`}
-              />
-            )
-          )} */}
         </div>
 
         {/* Mobile view - horizontal scroll */}
         <div
           ref={scrollContainerRef}
-          className="md:hidden flex overflow-x-auto pb-4 gap-3 scrollbar-hide"
+          className="md:hidden flex overflow-x-auto pb-4 gap-10 scrollbar-hide"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {categories.map((item: CategoryType) => (
@@ -104,7 +93,7 @@ export function CategorySection() {
               key={item.id}
               title={item.category}
               image={item.image || "/fallback.jpg"}
-              href={`/${item.id}`}
+              href={`/${item.category}`}
             />
           ))}
           {/* {Object.entries(groupedByCategory as Record<string, Product[]>).map(

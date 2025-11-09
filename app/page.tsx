@@ -11,6 +11,8 @@ import Difference from "./component/Difference/Difference";
 import VideoSection from "./component/VideoSection/VideoSection";
 import Products from "./component/Products/Products";
 import Testimonial from "./component/Testimonial/Testimonial";
+import BrandSection from "./component/BrandSection/BrandSection";
+import WhyWarr from "./component/WhyWarr/WhyWarr";
 export default function Home() {
   const isLoading = useSelector(
     (state: RootState) => state.dataSlice.isLoading
@@ -20,7 +22,7 @@ export default function Home() {
   }
 
   return (
-    <div className="bg-gray-50">
+    <div className="bg-gray-50 flex flex-col gap-5">
       <div className="container mx-auto flex flex-col gap-5 ">
         <Navbar />
         <HeroSection />
@@ -28,12 +30,14 @@ export default function Home() {
         <NewProductSection />
       </div>
       <VideoSection />
-      <div className="container mx-auto flex flex-col gap-5 mb-5">
+      <div className="container mx-auto flex flex-col gap-5">
         <Products />
         <Difference />
       </div>
       <Testimonial />
-      <div className="container mx-auto flex flex-col gap-5 mt-10">
+      <div className="container mx-auto flex flex-col gap-5">
+        <BrandSection />
+        <WhyWarr />
         <Footer />
       </div>
     </div>

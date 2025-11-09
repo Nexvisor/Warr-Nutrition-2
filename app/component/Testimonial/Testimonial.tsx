@@ -26,8 +26,20 @@ export default function Testimonial() {
   );
 
   return (
-    <section className="w-full bg-gradient-to-br from-[#B50D27] to-[#DA203A] py-10 md:py-20 flex justify-center items-center">
+    <section className="w-full bg-gradient-to-br from-[#B50D27] to-[#DA203A] py-12 md:py-20 flex flex-col justify-center items-center mb-3">
       <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+        {/* 🌹 Heading */}
+        <div className="text-center mb-10">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight">
+            What Our Customers Say
+          </h2>
+          <p className="mt-3 text-base sm:text-lg text-rose-100 max-w-2xl mx-auto">
+            Real feedback from athletes, fitness enthusiasts, and loyal fans of
+            our brand.
+          </p>
+        </div>
+
+        {/* 🌹 Carousel */}
         <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-black/10">
           {/* Carousel Container */}
           <div
