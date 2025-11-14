@@ -36,7 +36,7 @@ export default function Home() {
         <Difference />
       </div>
       <Testimonial />
-      <div className="container mx-auto flex flex-col gap-5">
+      <div className="container mx-auto flex flex-col gap-10">
         <BrandSection />
         <WhyWarr />
         <ChooseWarr />

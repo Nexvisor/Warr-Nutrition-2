@@ -8,6 +8,7 @@ import MassGainer from "@/assets/Warr/ganner.png";
 import ISO from "@/assets/Warr/ISO.png";
 import Nitro from "@/assets/Warr/nitro.png";
 import Protine from "@/assets/Warr/protine.png";
+import Creatine from "@/assets/Warr/Ceratine.png";
 import { useSelector } from "react-redux";
 import { ProductCategory } from "@/utils/DataSlice";
 import { RootState } from "@/utils/store";
@@ -27,6 +28,7 @@ export function CategorySection() {
     ISO: ISO.src,
     Nitro: Nitro.src,
     "Whey Performance": Protine.src,
+    Creatine: Creatine.src,
   };
 
   const categories = productCategories.map((categorie) => ({
