@@ -13,6 +13,7 @@ import Products from "./component/Products/Products";
 import Testimonial from "./component/Testimonial/Testimonial";
 import BrandSection from "./component/BrandSection/BrandSection";
 import WhyWarr from "./component/WhyWarr/WhyWarr";
+import ChooseWarr from "./component/ChooseWarr/ChooseWarr";
 export default function Home() {
   const isLoading = useSelector(
     (state: RootState) => state.dataSlice.isLoading
@@ -38,6 +39,7 @@ export default function Home() {
       <div className="container mx-auto flex flex-col gap-5">
         <BrandSection />
         <WhyWarr />
+        <ChooseWarr />
         <Footer />
       </div>
     </div>

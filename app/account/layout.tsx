@@ -1,19 +1,29 @@
 import React from "react";
-
 import ProfileHeader from "@/app/component/UserProfile/ProfileHeader";
+
 export default function AccountLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="w-full bg-gradient-to-br from-[#1e7ae4] to-[#052f5e] text-white  py-8">
-        <div className="container mx-auto py-8 px-4 md:px-6">
+    <div className="min-h-screen bg-gray-50">
+      {/* Header Section */}
+      <div className="w-full bg-gradient-to-r from-rose-600 via-rose-700 to-rose-800 text-white shadow-lg">
+        <div className="container mx-auto py-10 px-4 sm:px-6 lg:px-8">
           <ProfileHeader />
         </div>
       </div>
-      <div className="p-5">{children}</div>
+
+      {/* Content Wrapper */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 -mt-6">
+        <div className="bg-white rounded-xl shadow-md p-5 sm:p-8">
+          {children}
+        </div>
+      </div>
+
+      {/* Footer or space bottom */}
+      <div className="h-10"></div>
     </div>
   );
 }

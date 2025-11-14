@@ -41,8 +41,8 @@ function AddressForm({ onCancel }: AddressFormProps) {
     pincode: z
       .string()
       .min(1, "Pincode is required")
-      .max(6, "PinCode is not gerater than 6"),
-    city: z.string().min(1, "City is requied"),
+      .max(6, "PinCode must be exactly 6"),
+    city: z.string().min(1, "City is required"),
     state: z.string().min(1, "State is required"),
   });
 
@@ -56,6 +56,7 @@ function AddressForm({ onCancel }: AddressFormProps) {
       state: "",
     },
   });
+
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const { address1, address2, city, state, pincode } = values;
 
@@ -73,31 +74,18 @@ function AddressForm({ onCancel }: AddressFormProps) {
         const { success, message, data } = res.data;
 
         if (success) {
-          // setting data in store
           dispatch(setAddress([...userAddress, data]));
-
-          // close the form
           onCancel();
           toast.success(message, {
             position: "bottom-right",
             duration: 3000,
             className: "bg-green-700 text-white border border-green-600",
-            style: {
-              backgroundColor: "#285943",
-              color: "white",
-              border: "1px solid #3e5692",
-            },
           });
         } else {
           toast.error(message, {
             position: "bottom-right",
             duration: 3000,
-            className: "bg-red-700 text-white border border-red-600",
-            style: {
-              backgroundColor: "#C1292E",
-              color: "white",
-              border: "1px solid #3e5692",
-            },
+            className: "bg-rose-700 text-white border border-rose-600",
           });
         }
       } catch (error: any) {
@@ -107,12 +95,7 @@ function AddressForm({ onCancel }: AddressFormProps) {
           {
             position: "bottom-right",
             duration: 3000,
-            className: "bg-red-700 text-white border border-red-600",
-            style: {
-              backgroundColor: "#C1292E",
-              color: "white",
-              border: "1px solid #3e5692",
-            },
+            className: "bg-rose-700 text-white border border-rose-600",
           }
         );
       }
@@ -121,117 +104,89 @@ function AddressForm({ onCancel }: AddressFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-4">
-        <div className="space-y-2">
-          <FormField
-            control={form.control}
-            name="address1"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="flex items-center">
-                  <MapPin className="mr-2 h-4 w-4 text-blue-600" />
-                  Address Line 1
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    type="text"
-                    {...field}
-                    className="rounded-lg border-gray-300 bg-gray-50 focus:border-[#0047AB] focus:ring-[#0047AB]"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        {/* Address Line 1 */}
+        <FormField
+          control={form.control}
+          name="address1"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="flex items-center">
+                <MapPin className="mr-2 h-4 w-4 text-rose-600" />
+                Address Line 1
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="text"
+                  {...field}
+                  className="rounded-lg border-gray-300 bg-gray-50 focus:border-rose-600 focus:ring-rose-600"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-        <div className="space-y-2">
-          <FormField
-            control={form.control}
-            name="address2"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="flex items-center">
-                  <Building className="mr-2 h-4 w-4 text-blue-600" />
-                  Address Line 2
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    type="text"
-                    {...field}
-                    className="rounded-lg border-gray-300 bg-gray-50 focus:border-[#0047AB] focus:ring-[#0047AB]"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        {/* Address Line 2 */}
+        <FormField
+          control={form.control}
+          name="address2"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="flex items-center">
+                <Building className="mr-2 h-4 w-4 text-rose-600" />
+                Address Line 2
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="text"
+                  {...field}
+                  className="rounded-lg border-gray-300 bg-gray-50 focus:border-rose-600 focus:ring-rose-600"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
+        {/* Pincode + City */}
         <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <FormField
-              control={form.control}
-              name="pincode"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex items-center">
-                    <Hash className="mr-2 h-4 w-4 text-blue-600" />
-                    Pincode
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="tel"
-                      maxLength={6}
-                      {...field}
-                      className="rounded-lg border-gray-300 bg-gray-50 focus:border-[#0047AB] focus:ring-[#0047AB]"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <FormField
-              control={form.control}
-              name="city"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex items-center">
-                    <Globe className="mr-2 h-4 w-4 text-blue-600" />
-                    City
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      {...field}
-                      className="rounded-lg border-gray-300 bg-gray-50 focus:border-[#0047AB] focus:ring-[#0047AB]"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-
-        <div className="space-y-2">
           <FormField
             control={form.control}
-            name="state"
+            name="pincode"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="flex items-center">
-                  <Flag className="mr-2 h-4 w-4 text-blue-600" />
-                  State
+                  <Hash className="mr-2 h-4 w-4 text-rose-600" />
+                  Pincode
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type="tel"
+                    maxLength={6}
+                    {...field}
+                    className="rounded-lg border-gray-300 bg-gray-50 focus:border-rose-600 focus:ring-rose-600"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="flex items-center">
+                  <Globe className="mr-2 h-4 w-4 text-rose-600" />
+                  City
                 </FormLabel>
                 <FormControl>
                   <Input
                     type="text"
                     {...field}
-                    className="rounded-lg border-gray-300 bg-gray-50 focus:border-[#0047AB] focus:ring-[#0047AB]"
+                    className="rounded-lg border-gray-300 bg-gray-50 focus:border-rose-600 focus:ring-rose-600"
                   />
                 </FormControl>
                 <FormMessage />
@@ -240,6 +195,29 @@ function AddressForm({ onCancel }: AddressFormProps) {
           />
         </div>
 
+        {/* State */}
+        <FormField
+          control={form.control}
+          name="state"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="flex items-center">
+                <Flag className="mr-2 h-4 w-4 text-rose-600" />
+                State
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="text"
+                  {...field}
+                  className="rounded-lg border-gray-300 bg-gray-50 focus:border-rose-600 focus:ring-rose-600"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Action Buttons */}
         <div className="flex justify-end space-x-2 pt-4">
           <Button
             type="button"
@@ -250,9 +228,10 @@ function AddressForm({ onCancel }: AddressFormProps) {
             <X className="mr-2 h-4 w-4" />
             Cancel
           </Button>
+
           <Button
             type="submit"
-            className="bg-gradient-to-br from-[#1e7ae4] to-[#052f5e] text-white px-6 py-2 rounded-md shadow-md hover:opacity-90 transition"
+            className="bg-gradient-to-br from-rose-600 to-rose-800 text-white px-6 py-2 rounded-md shadow-md hover:opacity-90 transition"
           >
             <Save className="mr-2 h-4 w-4" />
             {isPending ? "Please Wait..." : "Save"}

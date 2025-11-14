@@ -25,12 +25,12 @@ import {
 } from "@/utils/DataSlice";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { toast } from "sonner";
 import { ImageCompo } from "@/app/component/comman/ImageCompo";
 import { getActualPrice } from "@/helper/getActualPrice";
 import DialogCompo from "@/app/component/comman/DialogCompo";
 import EditUserInfo from "@/app/component/EditUserInfo/EditUserInfo";
 import AddressSection from "@/app/component/AddressSection/AddressSection";
+import { toast } from "sonner";
 
 export default function CartPage() {
   const dispatch = useDispatch();
@@ -64,6 +64,7 @@ export default function CartPage() {
     ) || 0;
 
   const shipping = subtotal > 100 ? 0 : 9.99;
+
   const totalAmount = promoApplied
     ? (subtotal * 0.9 + shipping).toFixed(2)
     : (subtotal + shipping).toFixed(2);
@@ -73,6 +74,11 @@ export default function CartPage() {
       dispatch(setSelectedAddressId(""));
     }
   }, [isPaymentSuccess]);
+
+  useEffect(() => {
+    if (!selectedAddressId || selectedAddressId === "") return;
+    confirmPayment();
+  }, [selectedAddressId]);
 
   const updateQuantity = async (itemId: string, newQuantity: number) => {
     if (newQuantity < 1) return;
@@ -108,6 +114,144 @@ export default function CartPage() {
     }
     setIsAddressDrawerOpen(true);
   }
+
+  const confirmPayment = () => {
+    startTransition(async () => {
+      try {
+        // 1️⃣ Create order on backend
+        const orderRes = await axios.post("/api/order/create-order", {
+          totalPrice: Number(totalAmount),
+        });
+
+        const { success, message, orderInfo } = orderRes.data;
+
+        if (!success) {
+          toast.error(message || "Unable to create order.", {
+            position: "bottom-right",
+            duration: 3000,
+            className: "bg-red-700 text-white border border-red-600",
+            style: {
+              backgroundColor: "#C1292E",
+              color: "white",
+              border: "1px solid #3e5692",
+            },
+          });
+          return;
+        }
+
+        // Validate required fields for Razorpay
+        if (!orderInfo?.razorpayOrderId || !orderInfo?.amount) {
+          toast.error("Invalid order data received from server.", {
+            position: "bottom-right",
+          });
+          return;
+        }
+
+        // 2️⃣ Fetch Razorpay key
+        const envRes = await axios.get("/api/getEnv");
+        const { key_id } = envRes.data || {};
+        if (!key_id) {
+          toast.error("Payment configuration is missing.", {
+            position: "bottom-right",
+          });
+          return;
+        }
+
+        // 3️⃣ Razorpay checkout config
+        const options = {
+          key: key_id,
+          amount: orderInfo.amount,
+          currency: orderInfo.currency || "INR",
+          name: `${userInfo.username}`,
+          description: "Order Payment",
+          order_id: orderInfo.razorpayOrderId,
+          method: {
+            netbanking: true,
+            card: true,
+            upi: true,
+            paylater: false,
+          },
+          handler: async function (response: any) {
+            setIsPaymentSuccess(true); // ✅ Payment success
+            try {
+              // 4️⃣ Verify payment on backend
+              const verifyRes = await axios.post("/api/order/verify-payment", {
+                razorpayOrderId: response.razorpay_order_id,
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpaySignature: response.razorpay_signature,
+                cartId: cart.id,
+                products: cartProducts,
+                userId: userInfo.id,
+                addressId: selectedAddressId,
+                totalPrice: Number(totalAmount),
+              });
+
+              const { success, message } = verifyRes.data;
+              if (success) {
+                // clearing cart
+                dispatch(setCart({} as Cart));
+                // clearing addressID from store
+                dispatch(setSelectedAddressId(""));
+                toast.success("Order booked successfully!", {
+                  position: "bottom-right",
+                  duration: 3000,
+                  className: "bg-green-700 text-white border border-green-600",
+                  style: {
+                    backgroundColor: "#285943",
+                    color: "white",
+                    border: "1px solid #3e5692",
+                  },
+                });
+              } else {
+                toast.error(message || "Payment verification failed.", {
+                  position: "bottom-right",
+                });
+              }
+            } catch (err: any) {
+              console.error("Payment verification failed:", err.message);
+              toast.error("Payment verification failed.", {
+                position: "bottom-right",
+              });
+            }
+          },
+          modal: {
+            ondismiss: function () {
+              setIsPaymentSuccess(false); // ❌ User closed without paying
+              toast.error("Payment window closed. Order not completed.", {
+                position: "bottom-right",
+              });
+            },
+          },
+          prefill: {
+            name: `${userInfo.username}`,
+            contact: userInfo.phoneNumber,
+          },
+          theme: {
+            color: "#092553",
+          },
+        };
+
+        // 5️⃣ Open Razorpay Checkout
+        const rzp = new (window as any).Razorpay(options);
+
+        rzp.on("payment.failed", function (response: any) {
+          setIsPaymentSuccess(false); // ❌ Payment failed
+          console.error("Payment failed:", response.error);
+          toast.error(
+            response?.error?.description || "Payment was not completed.",
+            { position: "bottom-right" }
+          );
+        });
+
+        rzp.open();
+      } catch (error: any) {
+        console.error("Razorpay initialization failed:", error.message);
+        toast.error("Something went wrong while processing your order.", {
+          position: "bottom-right",
+        });
+      }
+    });
+  };
 
   return (
     <div>
