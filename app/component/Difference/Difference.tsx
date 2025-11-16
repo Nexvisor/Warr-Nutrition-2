@@ -1,5 +1,5 @@
 import React from "react";
-import BrandDifference from "@/assets/Warr/warrVSOther.svg";
+import BrandDifference from "@/public/Warr/warrVSOther.svg";
 import { ImageCompo } from "@/app/component/comman/ImageCompo";
 
 function Difference() {

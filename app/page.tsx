@@ -39,7 +39,9 @@ export default function Home() {
       <Testimonial />
       <div className="container mx-auto flex flex-col gap-10">
         <BrandSection />
-        <ImageTestimonial />
+      </div>
+      <ImageTestimonial />
+      <div className="container mx-auto flex flex-col gap-5">
         <WhyWarr />
         <ChooseWarr />
         <Footer />

@@ -43,7 +43,7 @@ export default function Testimonial() {
 
   return (
     <section className="w-full bg-gradient-to-br from-[#B50D27] to-[#DA203A] py-12 md:py-20 flex flex-col justify-center items-center mb-3">
-      <div className="w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-4">
+      <div className="w-full px-4 sm:px-6 lg:px-8 py-4">
         {/* Heading */}
         <div className="text-center mb-10">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight">
@@ -55,16 +55,13 @@ export default function Testimonial() {
         </div>
 
         {/* Infinite Scroll Carousel */}
-        {/* Infinite Scroll Container */}
+
         <div
           className="overflow-hidden relative"
           onMouseEnter={() => setHovering(true)}
           onMouseLeave={() => setHovering(false)}
         >
-          <motion.div
-            animate={controls}
-            className="flex gap-6 min-w-[200%] px-6 py-3"
-          >
+          <motion.div animate={controls} className="flex gap-6 w-fll px-6 py-3">
             {[...allReels, ...allReels].map((item, index) => (
               <div
                 key={index}

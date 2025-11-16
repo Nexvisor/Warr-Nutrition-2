@@ -1,6 +1,6 @@
 import Image from "next/image";
-import ChooseWarrDesk from "@/assets/FooterBanner/WE_PC.png";
-import ChooseWarrMobile from "@/assets/FooterBanner/WE_mobile.png";
+import ChooseWarrDesk from "@/public/FooterBanner/WE_PC.png";
+import ChooseWarrMobile from "@/public/FooterBanner/WE_mobile.png";
 
 export default function ChooseWarr() {
   return (

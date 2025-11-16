@@ -2,9 +2,9 @@
 
 import React from "react";
 import Image from "next/image";
-import Why1 from "@/assets/Why/Why1.svg";
-import Why2 from "@/assets/Why/Why2.svg";
-import Why3 from "@/assets/Why/Why3.svg";
+import Why1 from "@/public/Why/Why1.svg";
+import Why2 from "@/public/Why/Why2.svg";
+import Why3 from "@/public/Why/Why3.svg";
 function WhyWarr() {
   const reasons = [
     {
