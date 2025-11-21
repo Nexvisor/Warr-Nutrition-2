@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { getActualPrice } from "@/helper/getActualPrice";
 import { useAddToCart } from "@/hooks/useAddToCart";
 import ChangeProduct from "@/app/component/ChangeProduct/ChangeProduct";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export interface selectedProductType {
   weight: string;
@@ -303,66 +304,81 @@ function ProductDetails() {
         </div>
 
         {/* Tabs Section */}
-        <Tabs defaultValue="benefits" className="mt-12">
-          <TabsList className="bg-slate-100 text-navy-700 flex gap-4">
-            <TabsTrigger
-              value="Description"
-              className="data-[state=active]:bg-rose-800 data-[state=active]:text-white"
-            >
-              Descrition
-            </TabsTrigger>
-            <TabsTrigger
-              value="benefits"
-              className="data-[state=active]:bg-rose-800 data-[state=active]:text-white"
-            >
-              Key Benefits
-            </TabsTrigger>
-            <TabsTrigger
-              value="nutrition"
-              className="data-[state=active]:bg-rose-800 data-[state=active]:text-white"
-            >
-              Nutrition Information
-            </TabsTrigger>
-            <TabsTrigger
-              value="productHighlights"
-              className="data-[state=active]:bg-rose-800 data-[state=active]:text-white"
-            >
-              Product Highlights
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="Description">
-            {/* Description */}
-            <p className="text-gray-700 mb-6">{filterProduct.description}</p>
+        <Tabs defaultValue="benefits" className="mt-12 w-full">
+          {/* Scrollable wrapper only on small screens */}
+          <div className="w-full overflow-x-auto scrollbar-none sm:overflow-visible">
+            <TabsList className="inline-flex min-w-max bg-slate-100 text-navy-700 gap-2 sm:gap-4 p-1 rounded-lg">
+              <TabsTrigger
+                value="Description"
+                className="px-3 py-2 rounded-md data-[state=active]:bg-rose-800 data-[state=active]:text-white text-xs sm:text-sm md:text-base"
+              >
+                Description
+              </TabsTrigger>
+              <TabsTrigger
+                value="benefits"
+                className="px-3 py-2 rounded-md data-[state=active]:bg-rose-800 data-[state=active]:text-white text-xs sm:text-sm md:text-base"
+              >
+                Key Benefits
+              </TabsTrigger>
+              <TabsTrigger
+                value="nutrition"
+                className="px-3 py-2 rounded-md data-[state=active]:bg-rose-800 data-[state=active]:text-white text-xs sm:text-sm md:text-base"
+              >
+                Nutrition Info
+              </TabsTrigger>
+              <TabsTrigger
+                value="productHighlights"
+                className="px-3 py-2 rounded-md data-[state=active]:bg-rose-800 data-[state=active]:text-white text-xs sm:text-sm md:text-base"
+              >
+                Product Highlights
+              </TabsTrigger>
+            </TabsList>
+          </div>
+
+          {/* Description */}
+          <TabsContent value="Description" className="mt-6">
+            <p className="text-gray-700 mb-6 text-sm sm:text-base leading-relaxed">
+              {filterProduct.description}
+            </p>
           </TabsContent>
 
+          {/* Benefits */}
           <TabsContent value="benefits" className="mt-6">
-            <Card className="p-6">
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card className="p-4 sm:p-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {filterProduct.benifits.map((benefit) => (
                   <div
                     key={benefit.id}
-                    className="bg-slate-50 p-4 rounded-lg border border-slate-200"
+                    className="bg-slate-50 p-4 rounded-lg border border-slate-200 hover:shadow-sm transition"
                   >
                     <h3 className="font-semibold text-navy-800 mb-2">
                       {benefit.topic}
                     </h3>
-                    <p className="text-gray-700">{benefit.description}</p>
+                    <p className="text-gray-700 text-sm sm:text-base">
+                      {benefit.description}
+                    </p>
                   </div>
                 ))}
               </div>
             </Card>
           </TabsContent>
+
+          {/* Nutrition Table */}
           <TabsContent value="nutrition" className="mt-6">
-            <Card className="p-6">
+            <Card className="p-4 sm:p-6">
               <h3 className="font-semibold text-navy-800 mb-4 text-lg">
                 Nutrition Information
               </h3>
               <div className="overflow-x-auto">
-                <table className="w-full text-left">
-                  <thead className="bg-slate-100 text-navy-900">
+                <table className="min-w-[400px] w-full text-left">
+                  <thead className="bg-slate-100 text-navy-900 rounded-md">
                     <tr>
-                      <th className="px-4 py-3 font-semibold">Nutrient</th>
-                      <th className="px-4 py-3 font-semibold">Amount</th>
+                      <th className="px-4 py-3 font-semibold text-sm sm:text-base">
+                        Nutrient
+                      </th>
+                      <th className="px-4 py-3 font-semibold text-sm sm:text-base">
+                        Amount
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-200">
@@ -379,16 +395,15 @@ function ProductDetails() {
               </div>
             </Card>
           </TabsContent>
-          <TabsContent value="productHighlights">
-            {/* Product Highlights */}
-            <ul className="list-disc pl-5 space-y-1">
-              {filterProduct.productHighlights.map(
-                (highlight: string, index) => (
-                  <li key={index} className="text-gray-700">
-                    {highlight}
-                  </li>
-                )
-              )}
+
+          {/* Highlights */}
+          <TabsContent value="productHighlights" className="mt-6">
+            <ul className="list-disc pl-5 space-y-2 text-sm sm:text-base">
+              {filterProduct.productHighlights.map((highlight, index) => (
+                <li key={index} className="text-gray-700">
+                  {highlight}
+                </li>
+              ))}
             </ul>
           </TabsContent>
         </Tabs>
