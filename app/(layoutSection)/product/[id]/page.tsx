@@ -365,27 +365,32 @@ function ProductDetails() {
 
           {/* Nutrition Table */}
           <TabsContent value="nutrition" className="mt-6">
-            <Card className="p-4 sm:p-6">
-              <h3 className="font-semibold text-navy-800 mb-4 text-lg">
+            <Card className="p-4 sm:p-6 md:p-10">
+              <h3 className="font-semibold text-navy-800 mb-4 text-base sm:text-lg">
                 Nutrition Information
               </h3>
-              <div className="overflow-x-auto">
-                <table className="min-w-[400px] w-full text-left">
-                  <thead className="bg-slate-100 text-navy-900 rounded-md">
+
+              {/* Table Scroll only */}
+              <div className="w-full overflow-x-auto scrollbar-none">
+                <table className="w-full min-w-[320px] text-left border-collapse">
+                  <thead className="bg-slate-100 text-navy-900">
                     <tr>
-                      <th className="px-4 py-3 font-semibold text-sm sm:text-base">
+                      <th className="px-3 py-2 sm:px-4 sm:py-3 font-semibold text-xs sm:text-sm whitespace-nowrap">
                         Nutrient
                       </th>
-                      <th className="px-4 py-3 font-semibold text-sm sm:text-base">
+                      <th className="px-3 py-2 sm:px-4 sm:py-3 font-semibold text-xs sm:text-sm whitespace-nowrap">
                         Amount
                       </th>
                     </tr>
                   </thead>
+
                   <tbody className="divide-y divide-slate-200">
                     {filterProduct.nutrition.map((item) => (
                       <tr key={item.id} className="hover:bg-slate-50">
-                        <td className="px-4 py-3">{item.nutrition}</td>
-                        <td className="px-4 py-3">
+                        <td className="px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm">
+                          {item.nutrition}
+                        </td>
+                        <td className="px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm">
                           {item.quantity || "Not applicable"}
                         </td>
                       </tr>
