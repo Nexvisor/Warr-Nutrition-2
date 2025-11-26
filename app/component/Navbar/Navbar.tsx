@@ -187,8 +187,7 @@ function Navbar() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-1"
               >
-                <QrCode className="flex md:hidden" />
-                <span className="hidden md:flex text-sm">Authenticity</span>
+                <QrCode className="flex" />
               </Link>
               {(status === "authenticated" || userInfo.id) && (
                 <>
