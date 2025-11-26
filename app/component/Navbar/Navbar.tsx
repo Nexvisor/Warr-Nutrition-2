@@ -21,7 +21,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { usePathname, useRouter } from "next/navigation";
-import { ShoppingCart, User, Shield } from "lucide-react";
+import { ShoppingCart, User, QrCode } from "lucide-react";
 import DialogCompo from "@/app/component/comman/DialogCompo";
 import Login from "./Login";
 import { RootState } from "@/utils/store";
@@ -187,7 +187,7 @@ function Navbar() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-1"
               >
-                <Shield className="flex md:hidden" />
+                <QrCode className="flex md:hidden" />
                 <span className="hidden md:flex text-sm">Authenticity</span>
               </Link>
               {(status === "authenticated" || userInfo.id) && (
