@@ -58,7 +58,7 @@ export default function ImageTestimonial() {
   return (
     <section className="bg-gradient-to-br from-[#B50D27] to-[#DA203A]  py-14 md:py-20">
       <h2 className="text-center text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-12 tracking-tight">
-        Loved & Trusted By Professionals
+        Loved & Trusted By Our Customers
       </h2>
 
       {/* Infinite Scroll Container */}

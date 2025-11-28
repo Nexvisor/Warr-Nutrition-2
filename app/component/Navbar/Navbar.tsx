@@ -60,6 +60,7 @@ function Navbar() {
   }, []);
 
   useEffect(() => {
+    if (!userInfo.id) return;
     const controller = new AbortController();
     let isMounted = true; // Track mount status
 
@@ -160,7 +161,7 @@ function Navbar() {
 
   return (
     <header className="border-b sticky top-0 z-50 bg-white">
-      <div className="px-4 py-3 flex items-center justify-between">
+      <div className="px-2 py-3 flex items-center justify-between">
         {/* ---------- LOGO ---------- */}
         <Link href="/" className="flex items-center">
           <Image
