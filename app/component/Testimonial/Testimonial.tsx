@@ -70,22 +70,22 @@ export default function Testimonial() {
   flex-shrink-0 transition-transform duration-300 ease-out 
   hover:scale-105 hover:-translate-y-1 hover:shadow-2xl relative overflow-hidden"
               >
-                {/* <Video
+                <Video
                   src={Testimonial_1}
                   autoPlay
                   loop
                   muted
                   playsInline
                   className="absolute inset-0 w-full h-full object-cover rounded-xl"
-                /> */}
-                <video
+                />
+                {/* <video
                   src="/videos/testimonial_1.mp4"
                   autoPlay
                   loop
                   muted
                   playsInline
                   className="absolute inset-0 w-full h-full object-cover rounded-xl"
-                />
+                /> */}
               </div>
             ))}
           </motion.div>
