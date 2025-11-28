@@ -41,7 +41,7 @@ export default function Home() {
         <Difference />
       </div>
 
-      {/* <Testimonial /> */}
+      <Testimonial />
       {/* <div className="container mx-auto flex flex-col gap-10">
         <BrandSection />
       </div> */}
@@ -49,8 +49,8 @@ export default function Home() {
       <div className="container mx-auto flex flex-col gap-5">
         <WhyWarr />
         <ChooseWarr />
-        <Footer />
       </div>
+      <Footer />
     </div>
   );
 }

@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
-
+import Video from "next-video";
+import Testimonial_1 from "@/videos/testimonial_1.mp4";
 export default function Testimonial() {
   const [reelsPerSlide, setReelsPerSlide] = useState(4);
   const controls = useAnimation();
@@ -20,7 +21,7 @@ export default function Testimonial() {
   }, []);
 
   // Placeholder reel items
-  const allReels = Array.from({ length: 12 }, (_, i) => i + 1);
+  const allReels = Array.from({ length: 5 }, (_, i) => i + 1);
 
   const startScroll = async () => {
     while (true) {
@@ -69,8 +70,16 @@ export default function Testimonial() {
   flex-shrink-0 transition-transform duration-300 ease-out 
   hover:scale-105 hover:-translate-y-1 hover:shadow-2xl relative overflow-hidden"
               >
+                {/* <Video
+                  src={Testimonial_1}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover rounded-xl"
+                /> */}
                 <video
-                  src="/videos/GYM_Video.mp4"
+                  src="/videos/testimonial_1.mp4"
                   autoPlay
                   loop
                   muted
