@@ -31,8 +31,8 @@ export default function Home() {
         <CategorySection />
         <NewProductSection />
       </div>
-      {/* <VideoSection /> */}
-      <ChooseWarr />
+      <VideoSection />
+
       <div className="container mx-auto flex flex-col gap-5">
         <Products />
       </div>
@@ -48,7 +48,7 @@ export default function Home() {
 
       <div className="container mx-auto flex flex-col gap-5">
         <WhyWarr />
-
+        <ChooseWarr />
         <Footer />
       </div>
     </div>
