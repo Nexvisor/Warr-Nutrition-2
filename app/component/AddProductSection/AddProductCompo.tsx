@@ -1,14 +1,14 @@
 "use client";
 import React, { useState, useTransition } from "react";
 import UploadImage from "@/app/component/UploadImage";
-import { toast, Toaster } from "sonner";
-import {
-  ImageKitAbortError,
-  ImageKitInvalidRequestError,
-  ImageKitServerError,
-  ImageKitUploadNetworkError,
-  upload,
-} from "@imagekit/next";
+import { Toaster } from "sonner";
+// import {
+//   ImageKitAbortError,
+//   ImageKitInvalidRequestError,
+//   ImageKitServerError,
+//   ImageKitUploadNetworkError,
+//   upload,
+// } from "@imagekit/next";
 
 import {
   Select,
@@ -33,7 +33,7 @@ import {
 } from "@/components/ui/form";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { file, z } from "zod";
+import { z } from "zod";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/utils/store";
@@ -49,6 +49,7 @@ import AddFlavour from "@/app/component/AddProductSection/AddFlavour";
 
 import { FileWithPreview } from "@/FrontendSchema/FileWithPreview.Schema";
 import uploadToImageKit from "@/helper/imageKitAuthanticator";
+import { CustomToast } from "../comman/customToast";
 
 interface AddProductCompoType {
   closeProductDialog: (value: React.SetStateAction<boolean>) => void;
@@ -144,13 +145,9 @@ function AddProductCompo({ closeProductDialog }: AddProductCompoType) {
     startTransition(async () => {
       try {
         if (files.length === 0) {
-          toast.error("Please add at least one product image", {
-            position: "bottom-right",
-            style: {
-              background: "hsl(var(--destructive))",
-              color: "hsl(var(--destructive-foreground))",
-            },
-            duration: 3000,
+          CustomToast({
+            message: "Please add at least one product image",
+            type: "error",
           });
           return;
         }
@@ -196,49 +193,33 @@ function AddProductCompo({ closeProductDialog }: AddProductCompoType) {
           if (success) {
             dispatch(setProducts([...products, data]));
             closeProductDialog(false);
-
-            toast.success("Product added successfully!", {
-              style: {
-                background: "hsl(142.1 76.2% 36.3%)",
-                color: "white",
-              },
-              position: "bottom-right",
-              duration: 3000,
+            CustomToast({
+              message: "Product added successfully!",
+              type: "success",
             });
+
             setFiles([]);
             form.reset();
           } else {
-            toast.error(message, {
-              style: {
-                background: "hsl(0 84.2% 60.2%)",
-                color: "white",
-              },
-              position: "bottom-right",
-              duration: 3000,
+            CustomToast({
+              message,
+              type: "error",
             });
           }
         } catch (error) {
           console.error("Error adding product:", error);
-          toast.error("Failed to add product", {
-            description: "Please check your input and try again.",
-            style: {
-              background: "hsl(0 84.2% 60.2%)", // A standard red color
-              color: "white",
-            },
-            position: "bottom-right",
-            duration: 3000,
+
+          CustomToast({
+            message: "Failed to add product",
+            type: "error",
           });
         }
       } catch (err) {
         console.error("Unexpected error in product creation flow:", err);
-        toast.error("Something went wrong", {
-          description: "Unexpected error occurred. Try again later.",
-          style: {
-            background: "hsl(0 84.2% 60.2%)", // A standard red color
-            color: "white",
-          },
-          position: "bottom-right",
-          duration: 3000,
+        CustomToast({
+          message: "Something went wrong",
+          discription: "Unexpected error occurred. Try again later.",
+          type: "error",
         });
       }
     });

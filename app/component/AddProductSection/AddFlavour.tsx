@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/utils/store";
-import { toast } from "sonner";
+import { CustomToast } from "../comman/customToast";
 
 interface AddFlavorProps {
   onClose: () => void;
@@ -16,43 +16,36 @@ interface AddFlavorProps {
 function AddFlavour({ onClose }: AddFlavorProps) {
   const dispatch = useDispatch();
 
-  // Selects all existing product flavors from Redux
   const allPreviousFlavors = useSelector(
     (state: RootState) => state.dataSlice.productFlavors
   );
 
-  // Local state for dynamically adding new flavor fields
   const [flavors, setFlavors] = useState<ProductFlavor[]>([
     { id: crypto.randomUUID(), flavor: "" },
   ]);
 
   const [isPending, startTransition] = useTransition();
 
-  /** Updates a specific flavor name by ID */
   const updateFlavorName = (flavorName: string, flavorId: string) => {
-    const findIndex = flavors.findIndex((flav) => flav.id === flavorId);
-    const updatedFlavors = [...flavors];
-    updatedFlavors[findIndex].flavor = flavorName;
+    const updatedFlavors = flavors.map((flav) =>
+      flav.id === flavorId ? { ...flav, flavor: flavorName } : flav
+    );
     setFlavors(updatedFlavors);
   };
 
-  /** Removes a flavor field from the form */
   const removeFlavor = (id: string) => {
-    const filteredFlavors = flavors.filter((flav) => flav.id !== id);
-    setFlavors(filteredFlavors);
+    setFlavors((prev) => prev.filter((flav) => flav.id !== id));
   };
 
-  /** Adds a new empty flavor field */
   const addMoreFlavor = () => {
-    setFlavors([...flavors, { id: crypto.randomUUID(), flavor: "" }]);
+    setFlavors((prev) => [...prev, { id: crypto.randomUUID(), flavor: "" }]);
   };
 
-  /** Handles submission to the backend */
-  function handleAddFlavors() {
+  const handleAddFlavors = () => {
     startTransition(async () => {
       try {
         const res = await axios.post("/api/Products/add-flavour", {
-          flavours: flavors.map((flav: ProductFlavor) => flav.flavor),
+          flavours: flavors.map((flav) => flav.flavor),
         });
 
         const { success, message, productFlavours } = res.data;
@@ -63,25 +56,25 @@ function AddFlavour({ onClose }: AddFlavorProps) {
           );
           onClose();
 
-          toast.success(message, {
-            position: "bottom-right",
-            duration: 3000,
+          CustomToast({
+            message,
+            type: "success",
           });
         } else {
-          toast.error(message, {
-            position: "bottom-right",
-            duration: 3000,
+          CustomToast({
+            message,
+            type: "error",
           });
         }
       } catch (error) {
         console.error("Error adding flavors:", error);
-        toast.error("An unexpected error occurred. Please try again.", {
-          position: "bottom-right",
-          duration: 3000,
+        CustomToast({
+          message: "An unexpected error occurred. Please try again.",
+          type: "error",
         });
       }
     });
-  }
+  };
 
   return (
     <div className="p-4 md:p-6 bg-white rounded-lg">
@@ -89,9 +82,10 @@ function AddFlavour({ onClose }: AddFlavorProps) {
         <h2 className="text-2xl font-bold text-gray-800 mb-4">
           Manage Flavors
         </h2>
+
         <AnimatePresence>
           <div className="space-y-4 mb-6">
-            {flavors.map((flavor: ProductFlavor, index: number) => (
+            {flavors.map((flavor, index) => (
               <motion.div
                 key={flavor.id}
                 initial={{ opacity: 0, y: -10 }}
@@ -101,29 +95,23 @@ function AddFlavour({ onClose }: AddFlavorProps) {
                 className="flex items-center gap-2"
               >
                 <div className="flex-1">
-                  <label
-                    htmlFor={`flavor-${flavor.id}`}
-                    className="text-sm font-medium text-gray-600 sr-only"
-                  >
-                    Flavor Name
-                  </label>
                   <Input
-                    id={`flavor-${flavor.id}`}
                     placeholder="Enter flavor name"
                     value={flavor.flavor}
                     onChange={(e) =>
-                      updateFlavorName(String(e.target.value), flavor.id)
+                      updateFlavorName(e.target.value, flavor.id)
                     }
                     className="rounded-lg border-gray-300 bg-gray-50 focus:border-red-500 focus:ring-red-500"
                   />
                 </div>
+
                 {flavors.length > 1 && (
                   <Button
                     type="button"
                     variant="outline"
                     size="icon"
                     onClick={() => removeFlavor(flavor.id)}
-                    className="bg-red-100 text-red-600 hover:bg-red-200 hover:text-red-700 border-red-200"
+                    className="bg-red-100 text-red-600 hover:bg-red-200 border-red-200"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>

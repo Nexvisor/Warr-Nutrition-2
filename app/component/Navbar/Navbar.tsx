@@ -160,16 +160,16 @@ function Navbar() {
 
   return (
     <header className="border-b sticky top-0 z-50 bg-white">
-      <div className="px-4 py-4 flex items-center justify-between md:px-0">
-        {/* Logo */}
+      <div className="px-4 py-3 flex items-center justify-between">
+        {/* ---------- LOGO ---------- */}
         <Link href="/" className="flex items-center">
           <Image
-            src="https://ik.imagekit.io/fcuhugcgk/WAR_Nutrition/Logo.pdf%20(1)%20(1).png?updatedAt=1747399698831"
+            src="/logo.svg"
             alt="Warr Nutrition"
-            width={100}
-            height={32}
-            className="invert"
-            style={{ filter: "invert(1) brightness(0)" }}
+            width={120}
+            height={50}
+            className="object-contain"
+            priority
           />
         </Link>
         {pathname !== "/terms-conditon" && pathname !== "/about" && (

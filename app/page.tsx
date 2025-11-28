@@ -31,19 +31,24 @@ export default function Home() {
         <CategorySection />
         <NewProductSection />
       </div>
-      <VideoSection />
+      {/* <VideoSection /> */}
+      <ChooseWarr />
       <div className="container mx-auto flex flex-col gap-5">
         <Products />
-        <Difference />
-      </div>
-      <Testimonial />
-      <div className="container mx-auto flex flex-col gap-10">
-        <BrandSection />
       </div>
       <ImageTestimonial />
+      <div className="container mx-auto flex flex-col gap-10">
+        <Difference />
+      </div>
+
+      {/* <Testimonial /> */}
+      {/* <div className="container mx-auto flex flex-col gap-10">
+        <BrandSection />
+      </div> */}
+
       <div className="container mx-auto flex flex-col gap-5">
         <WhyWarr />
-        <ChooseWarr />
+
         <Footer />
       </div>
     </div>

@@ -3,55 +3,32 @@
 import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
+import Testimonial_1 from "@/public/testimonial/testimonial_1.png";
+import Testimonial_2 from "@/public/testimonial/testimonial_2.png";
+import Testimonial_3 from "@/public/testimonial/testimonial_3.png";
+import Testimonial_4 from "@/public/testimonial/testimonial_4.png";
+import Testimonial_5 from "@/public/testimonial/testimonial_5.png";
 
 const testimonials = [
   {
     id: 1,
-    name: "Aman Sharma",
-    role: "Fitness Athlete",
-    review:
-      "These supplements boosted my energy levels like never before! The quality is unmatched 🔥",
-    img: "/placeholder.svg",
+    img: Testimonial_1.src,
   },
   {
     id: 2,
-    name: "Neha Patel",
-    role: "Wellness Expert",
-    review:
-      "I'm impressed with the results! Absolutely love the taste and effectiveness 💪",
-    img: "/placeholder.svg",
+    img: Testimonial_2.src,
   },
   {
     id: 3,
-    name: "Rohit Kumar",
-    role: "Gym Trainer",
-    review:
-      "Highly recommended for anyone serious about performance and muscle recovery 🏋️‍♂️",
-    img: "/placeholder.svg",
+    img: Testimonial_3.src,
   },
   {
     id: 4,
-    name: "Simran Kaur",
-    role: "Bodybuilding Enthusiast",
-    review:
-      "Amazing taste and noticeable progress! Feeling stronger every single day ⚡",
-    img: "/placeholder.svg",
+    img: Testimonial_4.src,
   },
   {
     id: 5,
-    name: "Vikas Verma",
-    role: "Sports Nutrition Coach",
-    review:
-      "Perfect blend of power and purity! My athletes trust it completely 🏆",
-    img: "/placeholder.svg",
-  },
-  {
-    id: 6,
-    name: "Priya Singh",
-    role: "CrossFit Trainer",
-    review:
-      "My stamina has doubled during workouts! This brand truly stands out ⭐",
-    img: "/placeholder.svg",
+    img: Testimonial_5.src,
   },
 ];
 
@@ -97,29 +74,18 @@ export default function ImageTestimonial() {
           {[...testimonials, ...testimonials].map((item, index) => (
             <div
               key={index}
-              className=" rounded-xl p-6 w-60 min-h-[320px] shadow-lg border bg-gray-200 flex-shrink-0 
-  transition-transform duration-300 ease-out hover:scale-105 hover:-translate-y-1 hover:shadow-2xl"
+              className="w-60 flex-shrink-0 transition-transform duration-300 ease-out 
+  hover:scale-105 hover:-translate-y-1"
             >
-              <div className="flex justify-center mb-4">
-                <div className="w-20 h-20 rounded-full overflow-hidden border-2 ">
-                  <Image
-                    src={item.img}
-                    alt={item.name}
-                    width={80}
-                    height={80}
-                    className="object-cover"
-                  />
-                </div>
+              <div className="relative w-full h-72 rounded-xl overflow-hidden shadow-md hover:shadow-xl">
+                <Image
+                  src={item.img}
+                  alt={String(item.id)}
+                  fill
+                  className="object-cover"
+                  priority
+                />
               </div>
-
-              <p className="text-gray-700 text-center mb-4 italic">
-                “{item.review}”
-              </p>
-
-              <h3 className="text-center font-bold text-gray-900">
-                {item.name}
-              </h3>
-              <p className="text-center text-gray-500 text-sm">{item.role}</p>
             </div>
           ))}
         </motion.div>

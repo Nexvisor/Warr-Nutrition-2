@@ -20,9 +20,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import axios from "axios";
-import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { setAddress } from "@/utils/DataSlice";
+import { CustomToast } from "../comman/customToast"; // ✅ Updated Toast
 
 interface AddressFormProps {
   onCancel: () => void;
@@ -76,28 +76,24 @@ function AddressForm({ onCancel }: AddressFormProps) {
         if (success) {
           dispatch(setAddress([...userAddress, data]));
           onCancel();
-          toast.success(message, {
-            position: "bottom-right",
-            duration: 3000,
-            className: "bg-green-700 text-white border border-green-600",
+
+          CustomToast({
+            message,
+            type: "success",
           });
         } else {
-          toast.error(message, {
-            position: "bottom-right",
-            duration: 3000,
-            className: "bg-rose-700 text-white border border-rose-600",
+          CustomToast({
+            message,
+            type: "error",
           });
         }
       } catch (error: any) {
-        toast.error(
-          error?.response?.data?.message ||
+        CustomToast({
+          message:
+            error?.response?.data?.message ||
             "Something went wrong. Please try again.",
-          {
-            position: "bottom-right",
-            duration: 3000,
-            className: "bg-rose-700 text-white border border-rose-600",
-          }
-        );
+          type: "error",
+        });
       }
     });
   };
@@ -217,7 +213,7 @@ function AddressForm({ onCancel }: AddressFormProps) {
           )}
         />
 
-        {/* Action Buttons */}
+        {/* Buttons */}
         <div className="flex justify-end space-x-2 pt-4">
           <Button
             type="button"
