@@ -17,8 +17,7 @@ export default function TermsConditionPage() {
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
               Terms & Conditions
             </h1>
-
-            <div className="w-24 h-1 bg-blue-600 mx-auto mt-6"></div>
+            <div className="w-24 h-1 bg-rose-600 mx-auto mt-6"></div>
           </div>
 
           {/* Introduction */}
@@ -27,13 +26,12 @@ export default function TermsConditionPage() {
               Welcome to <strong>Warr Nutrition</strong>. By using our website{" "}
               <a
                 href="https://www.warrnutrition.com"
-                className="text-blue-600 hover:underline"
+                className="text-rose-600 font-medium hover:underline"
               >
                 https://www.warrnutrition.com
               </a>{" "}
               and purchasing our products, you agree to comply with the
-              following Terms & Conditions. Please read them carefully before
-              placing an order.
+              following Terms & Conditions.
             </p>
           </div>
 
@@ -42,7 +40,7 @@ export default function TermsConditionPage() {
             {/* Section 1 */}
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4 flex items-center">
-                <span className="bg-blue-100 text-blue-800 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">
+                <span className="bg-rose-100 text-rose-800 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">
                   1
                 </span>
                 Acceptance of Terms
@@ -56,213 +54,87 @@ export default function TermsConditionPage() {
             {/* Section 2 */}
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4 flex items-center">
-                <span className="bg-blue-100 text-blue-800 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">
+                <span className="bg-rose-100 text-rose-800 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">
                   2
                 </span>
                 Products & Usage
               </h2>
               <div className="text-gray-700 leading-relaxed space-y-3">
-                <p>
-                  Warr Nutrition provides nutritional supplements, protein
-                  powders, vitamins, herbal products, and other wellness items.
-                </p>
+                <p>Warr Nutrition provides nutritional supplements...</p>
                 <p>Products are intended for personal consumption only.</p>
-                <p>
-                  All items should be used as directed on the packaging or as
-                  advised by a qualified healthcare professional.
-                </p>
-                <p>We do not guarantee specific health or fitness results.</p>
+                <p>Use only as advised by professionals.</p>
               </div>
             </section>
 
             {/* Section 3 */}
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4 flex items-center">
-                <span className="bg-blue-100 text-blue-800 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">
+                <span className="bg-rose-100 text-rose-800 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">
                   3
                 </span>
                 Orders & Payments
               </h2>
               <div className="text-gray-700 leading-relaxed space-y-3">
-                <p>
-                  Orders are confirmed only upon successful payment through our
-                  payment gateway.
-                </p>
-                <p>
-                  All prices are in INR and inclusive of applicable taxes unless
-                  stated otherwise.
-                </p>
-                <p>
-                  We reserve the right to cancel orders due to incorrect
-                  pricing, stock unavailability, or suspected fraudulent
-                  activity.
-                </p>
+                <p>Orders confirmed only after successful payment.</p>
+                <p>All prices in INR and inclusive of taxes.</p>
+                <p>We may cancel orders due to fraud or unavailability.</p>
               </div>
             </section>
 
-            {/* Section 4 */}
-            <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4 flex items-center">
-                <span className="bg-blue-100 text-blue-800 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">
-                  4
-                </span>
-                Shipping & Delivery
-              </h2>
-              <div className="text-gray-700 leading-relaxed space-y-3">
-                <p>
-                  Orders are dispatched within 1–3 working days of payment
-                  confirmation.
-                </p>
-                <p>
-                  Delivery usually takes 3–7 working days, depending on the
-                  location.
-                </p>
-                <p>
-                  Delays caused by courier services, natural disasters, or
-                  unforeseen events are beyond our control.
-                </p>
-                <p>Shipping charges, if any, will be displayed at checkout.</p>
-              </div>
-            </section>
-
-            {/* Section 5 */}
-            {/* <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4 flex items-center">
-                <span className="bg-blue-100 text-blue-800 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">
-                  5
-                </span>
-                Returns, Refunds & Cancellations
-              </h2>
-              <div className="text-gray-700 leading-relaxed space-y-3">
-                <p>
-                  Due to the consumable nature of our products, returns are only
-                  accepted if:
-                </p>
-                <ul className="list-disc list-inside ml-4 space-y-2">
-                  <li>The product is damaged upon delivery</li>
-                  <li>The wrong product is delivered</li>
-                </ul>
-                <p>
-                  You must contact us within 48 hours of delivery for return
-                  requests, along with photographs of the product.
-                </p>
-                <p>
-                  Refunds (if approved) will be processed to the original
-                  payment method within 7–10 working days after inspection.
-                </p>
-                <p>Orders cannot be canceled once shipped.</p>
-              </div>
-            </section> */}
-
-            {/* Section 6 */}
+            {/* Section 5 (Health Disclaimer) */}
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4 flex items-center">
                 <span className="bg-orange-100 text-orange-800 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">
-                  5
+                  4
                 </span>
                 Health Disclaimer
               </h2>
-              <div className="bg-orange-50 border-l-4 border-orange-400 p-4 rounded-r-lg">
-                <div className="text-gray-700 leading-relaxed space-y-3">
+              <div className="bg-orange-50 border-l-4 border-orange-600 p-4 rounded-r-lg">
+                <div className="text-gray-700 leading-relaxed">
                   <p className="font-medium">Important Health Information:</p>
-                  <p>
-                    Products are not intended to diagnose, treat, cure, or
-                    prevent any disease.
-                  </p>
-                  <p>
-                    Consult a doctor before using any supplement, especially if
-                    you have medical conditions, are pregnant, or breastfeeding.
-                  </p>
-                  <p>
-                    We are not responsible for misuse, allergic reactions, or
-                    side effects.
-                  </p>
+                  <p>Consult a doctor if you have medical concerns...</p>
                 </div>
               </div>
             </section>
 
-            {/* Section 7 */}
+            {/* Section 6 */}
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4 flex items-center">
-                <span className="bg-blue-100 text-blue-800 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">
-                  6
+                <span className="bg-rose-100 text-rose-800 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">
+                  5
                 </span>
                 Limitation of Liability
               </h2>
-              <div className="text-gray-700 leading-relaxed space-y-3">
-                <p>
-                  Our maximum liability is limited to the amount paid for the
-                  purchased product.
-                </p>
-                <p>
-                  We are not liable for indirect or consequential damages
-                  resulting from product use or website access.
-                </p>
-              </div>
+              <p className="text-gray-700 leading-relaxed">
+                We are not responsible for misuse or negligent handling of
+                products.
+              </p>
             </section>
 
-            {/* Section 8 */}
-            {/* <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4 flex items-center">
-                <span className="bg-blue-100 text-blue-800 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">
-                  8
-                </span>
-                Governing Law & Jurisdiction
-              </h2>
-              <div className="text-gray-700 leading-relaxed space-y-3">
-                <p>These Terms are governed by the laws of India.</p>
-                <p>
-                  All disputes are subject to the exclusive jurisdiction of the
-                  courts in Faridabad.
-                </p>
-              </div>
-            </section> */}
-
-            {/* Section 9 */}
+            {/* Contact Information */}
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4 flex items-center">
                 <span className="bg-green-100 text-green-800 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">
-                  7
+                  6
                 </span>
                 Contact Information
               </h2>
+
               <div className="bg-green-50 border border-green-200 rounded-lg p-6">
                 <p className="text-gray-700 mb-4 font-medium">
-                  For any queries regarding these Terms & Conditions, you can
-                  reach us at:
+                  For any queries regarding these Terms & Conditions:
                 </p>
                 <div className="space-y-3 text-gray-700">
-                  <div className="flex items-center">
-                    <span className="text-lg mr-3">📧</span>
-                    <span>
-                      <strong>Email:</strong> Cdroverseas@gmail.com
-                    </span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-lg mr-3">📞</span>
-                    <span>
-                      <strong>Phone:</strong> 8920026757
-                    </span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-lg mr-3">🏢</span>
-                    <span>
-                      <strong>Address:</strong> Booth No-100, Sector 21D Market,
-                      Faridabad, Haryana 121001
-                    </span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-lg mr-3">📋</span>
-                    <span>
-                      <strong>FSSAI License Number:</strong> 10824003000310
-                    </span>
-                  </div>
+                  <p>📧 Email: support@warrnutrition.com</p>
+                  <p>📞 Phone: +91 89200 26757</p>
+                  <p>🏢 Address: Booth No-100, Sector 21D Market, Faridabad</p>
                 </div>
               </div>
             </section>
           </div>
         </div>
       </div>
+
       <Footer />
     </div>
   );
