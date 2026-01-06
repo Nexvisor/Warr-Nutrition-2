@@ -1,0 +1,23 @@
+{
+  "status": "ready",
+  "originalFilePath": "videos\\testimonial_1.mp4",
+  "provider": "mux",
+  "providerMetadata": {
+    "mux": {
+      "uploadId": "wVES00a9AnFaT0242TXVj8zmVDYC9Pg902H1uJyVKrnsqI",
+      "assetId": "DJxP7fdcS4MaFlkyBpUqLcAAJhf3b01w9az3RBsVMbnQ",
+      "playbackId": "3cHka7k5Uovt6wJXXf6PXrt00lJRwNccRMlu8hwlvdZY"
+    }
+  },
+  "createdAt": 1764332563595,
+  "updatedAt": 1764332585907,
+  "size": 28020742,
+  "sources": [
+    {
+      "src": "https://stream.mux.com/3cHka7k5Uovt6wJXXf6PXrt00lJRwNccRMlu8hwlvdZY.m3u8",
+      "type": "application/x-mpegURL"
+    }
+  ],
+  "poster": "https://image.mux.com/3cHka7k5Uovt6wJXXf6PXrt00lJRwNccRMlu8hwlvdZY/thumbnail.webp",
+  "blurDataURL": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAAAQAgCdASoJABAAAQAcJYwCdAD0pk+NSxCAAP7ePybgF/8q//Cnu3uVTY3P//w/btS/eGn17uZm8/m1jen6mC7MMbuzKY4kxY2oK8xfU53x8xoFEJdtr/tj3uF8fw499wfruAsqLWtP5S83+Nu37rzXSCAAAA=="
+}

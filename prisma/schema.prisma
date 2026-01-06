@@ -1,0 +1,166 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+
+model User{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  username String?
+  email String @unique
+  phoneNumber String? @unique
+  role Role @default(USER)
+  addresses Address[]
+  orders Order[]
+  cart Cart? @relation("UserCart")
+  otp OTP?
+  appliedPromoCodes PromoCode[]
+  createAt DateTime @default(now())
+}
+model OTP{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @unique @db.ObjectId
+  code String
+  user User @relation(fields: [userId],references: [id])
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  @@index([expiresAt])
+
+}
+model Product{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  productImages ProductImages[]
+  price Int
+  discountPercentage Int
+  stock Int
+  categoryId String @db.ObjectId
+  flavorId String? @db.ObjectId
+  category ProductCategory @relation(fields: [categoryId], references: [id])
+  flavor ProductFlavor? @relation(fields: [flavorId], references: [id])
+  weight String
+  benifits Benefit[]
+  nutrition Nutrition[]
+  productHighlights String[]
+  orderItems OrderItems[]
+  cartItems CartItems[]
+  createdAt DateTime @default(now())
+}
+
+model ProductImages{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  url String
+  imageKitId String
+  product Product @relation(fields: [productId],references: [id])
+  productId String @db.ObjectId
+}
+
+model ProductCategory{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  category String
+  product Product[]
+}
+
+model ProductFlavor{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  flavor String
+  product Product[]
+}
+
+model Benefit {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  topic       String
+  description String
+  product     Product? @relation(fields: [productId], references: [id])
+  productId   String?  @db.ObjectId
+}
+
+model Nutrition {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  nutrition String
+  quantity  String?
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @db.ObjectId
+}
+
+
+model Address {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  address1  String
+  address2  String?  
+  pincode   String
+  city      String
+  state     String
+  userId    String   @db.ObjectId
+  order     Order?  @relation("orderAddress")
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  addressId String @unique @db.ObjectId
+  address Address @relation("orderAddress",fields: [addressId], references: [id])
+  userId String @db.ObjectId
+  user User @relation(fields: [userId], references: [id])
+  total Int
+  orderItems OrderItems[]
+  razorpay_id String?
+  status    OrderStatus  @default(PENDING)
+  promoCode PromoCode?
+  createdAt DateTime @default(now())
+}
+
+model OrderItems{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  orderId String @db.ObjectId
+  order Order @relation(fields: [orderId], references: [id])
+  productId String @db.ObjectId 
+  product Product @relation(fields: [productId], references: [id])
+  quantity Int
+  orderPrice Int
+}
+
+model Cart{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId @unique
+  user User @relation("UserCart",fields: [userId], references: [id])
+  cartItems CartItems[]
+}
+
+model CartItems{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  cartId String @db.ObjectId
+  cart Cart @relation(fields: [cartId], references: [id])
+  productId String @db.ObjectId
+  product Product @relation(fields: [productId], references: [id])
+  quantity Int
+}
+model PromoCode{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  code String
+  discount Int
+  userId String  @db.ObjectId
+  orderId String  @db.ObjectId @unique
+  order Order @relation(fields: [orderId], references: [id])
+  user User @relation(fields: [userId],references: [id])
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum Role {
+  USER
+  ADMIN
+}
