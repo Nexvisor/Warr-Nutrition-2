@@ -47,10 +47,10 @@ export const GET = async (req: NextRequest) => {
     const promoCodeInfo = PROMO_CODES_INFO.find((item) => item.code === code);
 
     if (!promoCodeInfo) {
-      return NextResponse.json(
-        { success: false, message: "Invalid promo code" },
-        { status: 400 }
-      );
+      return NextResponse.json({
+        success: false,
+        message: "Invalid promo code",
+      });
     }
 
     /**
@@ -67,10 +67,7 @@ export const GET = async (req: NextRequest) => {
     });
 
     if (!user) {
-      return NextResponse.json(
-        { success: false, message: "User not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ success: false, message: "User not found" });
     }
 
     /**
